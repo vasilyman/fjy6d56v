@@ -1,16 +1,16 @@
 /**
  * Нужно превратить файл в ts и указать типы аргументов и типы возвращаемого значения
  * */
-export const removePlus = (string) => string.replace(/^\+/, '');
+export const removePlus = (string: string): string => string.replace(/^\+/, '');
 
-export const addPlus = (string) => `+${string}`;
+export const addPlus = (string: string): string => `+${string}`;
 
-export const removeFirstZeros = (value) => value.replace(/^(-)?[0]+(-?\d+.*)$/, '$1$2');
+export const removeFirstZeros = (value: string): string => value.replace(/^(-)?[0]+(-?\d+.*)$/, '$1$2');
 
-export const getBeautifulNumber = (value, separator = ' ') =>
+export const getBeautifulNumber = (value?: string, separator = ' '): string | undefined =>
   value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
 
-export const round = (value, accuracy = 2) => {
+export const round = (value: number, accuracy = 2): number => {
   const d = 10 ** accuracy;
   return Math.round(value * d) / d;
 };
@@ -18,7 +18,7 @@ export const round = (value, accuracy = 2) => {
 const transformRegexp =
   /(matrix\(-?\d+(\.\d+)?, -?\d+(\.\d+)?, -?\d+(\.\d+)?, -?\d+(\.\d+)?, )(-?\d+(\.\d+)?), (-?\d+(\.\d+)?)\)/;
 
-export const getTransformFromCss = (transformCssString) => {
+export const getTransformFromCss = (transformCssString: string): { x: number; y: number } => {
   const data = transformCssString.match(transformRegexp);
   if (!data) return { x: 0, y: 0 };
   return {
@@ -27,20 +27,20 @@ export const getTransformFromCss = (transformCssString) => {
   };
 };
 
-export const getColorContrastValue = ([red, green, blue]) =>
+export const getColorContrastValue = ([red, green, blue]: [number, number, number]) =>
   // http://www.w3.org/TR/AERT#color-contrast
   Math.round((red * 299 + green * 587 + blue * 114) / 1000);
 
-export const getContrastType = (contrastValue) => (contrastValue > 125 ? 'black' : 'white');
+export const getContrastType = (contrastValue: number): 'black' | 'white' => (contrastValue > 125 ? 'black' : 'white');
 
 export const shortColorRegExp = /^#[0-9a-f]{3}$/i;
 export const longColorRegExp = /^#[0-9a-f]{6}$/i;
 
-export const checkColor = (color) => {
+export const checkColor = (color: string): void | never => {
   if (!longColorRegExp.test(color) && !shortColorRegExp.test(color)) throw new Error(`invalid hex color: ${color}`);
 };
 
-export const hex2rgb = (color) => {
+export const hex2rgb = (color: string): [number, number, number] => {
   checkColor(color);
   if (shortColorRegExp.test(color)) {
     const red = parseInt(color.substring(1, 2), 16);
@@ -54,11 +54,19 @@ export const hex2rgb = (color) => {
   return [red, green, blue];
 };
 
-export const getNumberedArray = (arr) => arr.map((value, number) => ({ value, number }));
-export const toStringArray = (arr) => arr.map(({ value, number }) => `${value}_${number}`);
+export const getNumberedArray = <T>(arr: T[]): Record<number, T>[] => arr.map((value, number) => ({ value, number }));
+export const toStringArray = <V extends string, N extends string>(arr: { value: V; number: N }[]): `${V}_${N}`[] =>
+  arr.map<`${V}_${N}`>(({ value, number }) => `${value}_${number}`);
 
-export const transformCustomers = (customers) => {
-  return customers.reduce((acc, customer) => {
+type TCustomer = {
+  id: string;
+  name: string;
+  age: number;
+  isSubscribed: boolean;
+};
+
+export const transformCustomers = (customers: TCustomer[]): Record<string, Omit<TCustomer, 'id'>> => {
+  return customers.reduce<Record<string, Omit<TCustomer, 'id'>>>((acc, customer) => {
     acc[customer.id] = { name: customer.name, age: customer.age, isSubscribed: customer.isSubscribed };
     return acc;
   }, {});
