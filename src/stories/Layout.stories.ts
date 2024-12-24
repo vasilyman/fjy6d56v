@@ -1,9 +1,9 @@
 import type { Meta } from '@storybook/react';
-import { Header } from '../shared';
+import { Layout } from '../shared';
 
-const meta: Meta<typeof Header> = {
-  title: 'Components/Header',
-  component: Header,
+const meta: Meta<typeof Layout> = {
+  title: 'Components/Layout',
+  component: Layout,
   args: {
     children: 'Hello world!',
   },
