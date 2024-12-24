@@ -18,7 +18,9 @@ export const round = (value: number, accuracy = 2): number => {
 const transformRegexp =
   /(matrix\(-?\d+(\.\d+)?, -?\d+(\.\d+)?, -?\d+(\.\d+)?, -?\d+(\.\d+)?, )(-?\d+(\.\d+)?), (-?\d+(\.\d+)?)\)/;
 
-export const getTransformFromCss = (transformCssString: string): { x: number; y: number } => {
+type TCoordinates = { x: number; y: number };
+
+export const getTransformFromCss = (transformCssString: string): TCoordinates => {
   const data = transformCssString.match(transformRegexp);
   if (!data) return { x: 0, y: 0 };
   return {
@@ -54,8 +56,10 @@ export const hex2rgb = (color: string): [number, number, number] => {
   return [red, green, blue];
 };
 
+type TStringArrayItem<V extends string, N extends string> = { value: V; number: N };
+
 export const getNumberedArray = <T>(arr: T[]): Record<number, T>[] => arr.map((value, number) => ({ value, number }));
-export const toStringArray = <V extends string, N extends string>(arr: { value: V; number: N }[]): `${V}_${N}`[] =>
+export const toStringArray = <V extends string, N extends string>(arr: TStringArrayItem<V, N>[]): `${V}_${N}`[] =>
   arr.map<`${V}_${N}`>(({ value, number }) => `${value}_${number}`);
 
 type TCustomer = {
