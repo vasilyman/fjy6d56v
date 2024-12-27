@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import $style from './layout.module.scss';
 import { Header } from '../header';
 
 interface LayoutProps {
@@ -10,9 +9,9 @@ interface LayoutProps {
  */
 export const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className={$style['layout']}>
-      <Header />
-      <main>{children}</main>
-    </div>
+    <>
+      <Header sticky={true} />
+      {children}
+    </>
   );
 };
