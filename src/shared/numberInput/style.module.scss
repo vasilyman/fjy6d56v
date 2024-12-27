@@ -1,0 +1,45 @@
+.input-number {
+    --bg: #3B82F6;
+    border-radius: 999px;
+    display: flex;
+
+    &, & * {
+        box-sizing: border-box;
+    }
+
+    &__input {
+        outline: none;
+        border-left: none;
+        border-right: none;
+        border-top: 1px solid var(--bg);
+        border-bottom: 1px solid var(--bg);
+        padding: .5rem;
+        line-height: 1rem;
+
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+            appearance: none;
+        }
+    }
+
+    &__button {
+        border: none;
+        outline: none;
+        background: var(--bg);
+        color: white;
+        border: 1px solid var(--bg);
+        height: calc(2rem + 2px);
+        padding: 0px .5rem;
+        cursor: pointer;
+
+        &_left {
+            border-top-left-radius: .25em;
+            border-bottom-left-radius: .25em;
+        }
+        &_right {
+            border-top-right-radius: .25em;
+            border-bottom-right-radius: .25em;  
+        }
+    }
+
+    
+}
