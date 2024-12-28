@@ -1,0 +1,65 @@
+.product-view {
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    width: 100%;
+    align-items: flex-start;
+
+    &__row {
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+    }
+
+    &__image {
+        aspect-ratio: 1;
+        object-fit: cover;
+        background: #ececec;
+        width: 30%;
+        flex: none;
+    }
+
+    &__title {
+        color: #475569;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        flex: 1;
+    }
+
+    &__action {
+        width: 30%;
+        flex: none;
+        display: flex;
+        flex-direction: column;
+        padding: 1.25rem;
+        gap: 1.25rem;
+    }
+
+    &__sum {
+        color: #1E293B;
+        font-size: 2.25rem;
+        line-height: 2.75rem;
+        font-weight: 600;
+        display: flex;
+        overflow: hidden;
+    }
+
+    &__description {
+        color: #1E293B;
+        font-size: .875rem;
+        line-height: 1rem;
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+
+    &__add-to-card {
+    }
+}
+    
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}

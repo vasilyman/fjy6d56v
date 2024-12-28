@@ -1,3 +1,7 @@
-.addToCard {
-    
+.add-to-card {
+    width: 10rem;
+
+    &_block {
+        width: 100%;
+    }
 }

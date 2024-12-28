@@ -1,7 +1,12 @@
 .input-number {
     --bg: #3B82F6;
     border-radius: 999px;
-    display: flex;
+    display: inline-flex;
+    max-width: 100%;
+
+    &_block {
+        width: 100%;
+    }
 
     &, & * {
         box-sizing: border-box;
@@ -15,6 +20,8 @@
         border-bottom: 1px solid var(--bg);
         padding: .5rem;
         line-height: 1rem;
+        flex: 1;
+        min-width: 1px;
 
         &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
             appearance: none;
@@ -30,6 +37,7 @@
         height: calc(2rem + 2px);
         padding: 0px .5rem;
         cursor: pointer;
+        flex: none;
 
         &_left {
             border-top-left-radius: .25em;

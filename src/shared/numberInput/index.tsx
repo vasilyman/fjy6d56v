@@ -8,13 +8,14 @@ interface NumberInputProps {
   onInput?: (v: number) => void;
   max?: number;
   min?: number;
+  block?: boolean;
 }
 /**
  * NumberInput
  * TODO: fix cursor position
  */
 
-export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value, max, min }) => {
+export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value, max, min, block }) => {
   const maximum = Math.min(max ?? Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
   const minimum = min;
 
@@ -28,11 +29,11 @@ export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value
   };
 
   const onSub = () => {
-    if (value - 1 >= minimum) onInput(value - 1);
+    if (min === undefined || value - 1 >= minimum) onInput(value - 1);
   };
 
   return (
-    <div className={cn($style['input-number'], className)}>
+    <div className={cn($style['input-number'], className, { [$style['input-number_block']]: block })}>
       <button
         type="button"
         className={cn($style['input-number__button'], $style['input-number__button_left'])}
@@ -42,6 +43,7 @@ export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value
       </button>
       <input
         type="number"
+        title={value.toString()}
         onInput={onInputLocal}
         className={$style['input-number__input']}
         value={value}
