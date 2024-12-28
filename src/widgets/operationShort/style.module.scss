@@ -1,0 +1,52 @@
+.operation-short {
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 23.5rem;
+    padding: 1.25rem;
+    cursor: pointer;
+    display: grid;
+    gap: .75rem;
+    grid-template:
+        "a b" 1.75rem
+        "c d" 2.75rem
+        "e d" 1rem / 14fr 5.5fr;
+    
+
+    &__title {
+        color: #475569;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        grid-area: a;
+    }
+
+    &__sum {
+        color: #1E293B;
+        font-size: 2.25rem;
+        line-height: 2.75rem;
+        font-weight: 600;
+        grid-area: c;
+        display: flex;
+        overflow: hidden;
+    }
+
+    &__description {
+        color: #1D4ED8;
+        font-size: .875rem;
+        line-height: 1rem;
+        grid-area: e;
+        
+    }
+
+    &__type {
+        text-align: right;
+        color: #22C55E;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        grid-area: b;
+    }
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}

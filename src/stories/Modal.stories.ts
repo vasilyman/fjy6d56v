@@ -1,10 +1,11 @@
 import type { Meta } from '@storybook/react';
-import { Header } from '../shared';
+import { Modal } from '../shared';
 
-const meta: Meta<typeof Header> = {
-  title: 'Components/Header',
-  component: Header,
+const meta: Meta<typeof Modal> = {
+  title: 'Components/Modal',
+  component: Modal,
   args: {
+    visible: false,
     children: 'Hello world!',
   },
 };

@@ -1,0 +1,54 @@
+.product-card {
+    font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 23.5rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+
+    &__image {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        background: #ececec;
+    }
+
+    &__title {
+        color: #475569;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    &__sum {
+        color: #1E293B;
+        font-size: 2.25rem;
+        line-height: 2.75rem;
+        font-weight: 600;
+        display: flex;
+        overflow: hidden;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    &__description {
+        color: #1D4ED8;
+        font-size: .875rem;
+        line-height: 1rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    &__add-to-card {
+        align-self: flex-end;
+        margin-left: 1.25rem;
+        margin-right: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+}
+    
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-wrap: nowrap;
+}
