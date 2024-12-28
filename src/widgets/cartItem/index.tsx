@@ -13,7 +13,6 @@ interface CartItemProps {
  */
 export const CartItem: FC<CartItemProps> = ({ sum, imgUrl, title }) => {
   const sumFormatted = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(sum);
-  const [count, setCount] = useState(0);
   return (
     <>
       <section className={$style['cart-item__row']}>
