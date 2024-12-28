@@ -21,11 +21,20 @@
         flex: none;
     }
 
+    &__info {
+        flex: 1;
+    }
+
     &__title {
         color: #475569;
         font-size: 1.25rem;
         line-height: 1.75rem;
-        flex: 1;
+    }
+
+    &__type {
+        color: #475569;
+        font-size: .825rem;
+        line-height: 1.75rem;
     }
 
     &__action {

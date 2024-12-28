@@ -16,6 +16,7 @@ const meta: Meta<typeof ProductView> = {
     sum: 200,
     imgUrl: 'https://placehold.jp/150x150.png',
     title: 'Title',
+    type: 'Product type',
     description: `Description long very very long. Description long very very long. Description long very very long. Description long very very long. Description long very very long. Description long very very long. 
     Description long very very long. Description long very very long. Description long very very long. `,
   },
