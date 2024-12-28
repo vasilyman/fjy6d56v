@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Header } from '../header';
+import { Header } from '../../shared/header';
 
 interface LayoutProps {
   children?: React.ReactNode;
