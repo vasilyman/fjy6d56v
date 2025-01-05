@@ -1,0 +1,40 @@
+.header {
+    box-sizing: border-box;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    align-items: center;
+    border-bottom: 1px solid #93C5FD;
+    background: white;
+
+    &__logo {
+        margin: .5rem 0px .5rem .5rem;
+    }
+
+    &__menu {
+        //
+    }
+
+    &_sticky {
+        position: sticky;
+        top: 0px;
+    }
+}
+
+// TODO move into component
+.menu {
+    --color: rgb(59, 130, 246);
+    box-sizing: border-box;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    border: 2px solid var(--color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &__icon {
+        color: var(--color);
+    }
+}

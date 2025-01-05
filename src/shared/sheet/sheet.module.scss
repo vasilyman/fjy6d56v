@@ -1,0 +1,10 @@
+.sheet {
+  background: white;
+  border-radius: .25rem;
+  box-shadow: 0px 0px 1px 0px #091E424F, 0px 3px 8px 0px #091E4229;
+
+  &,
+  & * {
+    box-sizing: border-box;
+  }
+}
