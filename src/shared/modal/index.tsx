@@ -5,7 +5,7 @@ import { Sheet } from '../sheet';
 import { Icon } from '../icon';
 
 interface ModalProps {
-  visible?: boolean;
+  visible: boolean;
   children?: React.ReactNode;
 }
 /**
