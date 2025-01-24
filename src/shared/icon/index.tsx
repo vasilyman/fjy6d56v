@@ -10,13 +10,14 @@ interface IconProps {
   name: TIcon;
   bold?: boolean;
   className?: string;
+  onClick?: () => void;
 }
 
 /**
  * Primary UI component for user interaction
  */
-export const Icon: FC<IconProps> = ({ className, name }) => {
+export const Icon: FC<IconProps> = ({ className, name, onClick }) => {
   const iconClass = `fa-solid fa-${name}`;
 
-  return <i className={cn($style['icon'], className, iconClass)} />;
+  return <i className={cn($style['icon'], className, iconClass)} onClick={onClick} />;
 };

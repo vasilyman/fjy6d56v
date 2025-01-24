@@ -4,8 +4,8 @@
     gap: 1.5rem;
     flex-wrap: nowrap;
     align-items: center;
-    border-bottom: 1px solid #93C5FD;
-    background: white;
+    border-bottom: 1px solid var(--bg-primary-contrast-1);
+    background: var(--bg);
 
     &__logo {
         margin: .5rem 0px .5rem .5rem;
@@ -13,6 +13,14 @@
 
     &__menu {
         //
+    }
+
+    &__content {
+        flex: 1;
+    }
+
+    &__theme-toggler {
+        margin-right: 1rem;
     }
 
     &_sticky {

@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { Layout } from '../widgets';
+import { Layout } from '../app/layout';
 import React from 'react';
 
 const children = () => <main style={{ height: '2000px' }}>Hello world!</main>;
