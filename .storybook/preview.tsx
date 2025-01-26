@@ -1,11 +1,14 @@
 import type { Preview } from "@storybook/react";
 import React from "react";
 import { ThemeProvider } from '../src/app/theme';
+import { I18nProvider } from '../src/app/i18n';
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-      <ThemeProvider><Story /></ThemeProvider>
+      <I18nProvider>
+        <ThemeProvider><Story /></ThemeProvider>
+      </I18nProvider>
     ),
   ],
   parameters: {
