@@ -14,14 +14,14 @@ export const SelectLang: FC<SelectLang> = ({ className }) => {
   return (
     <div className={clsx($style['select-lang'], className)}>
       <button
-        className={clsx($style['select-lang_button'], { [$style['select-lang_button_active']]: lang === ELang.RU })}
+        className={clsx($style['select-lang__button'], { [$style['select-lang__button_active']]: lang === ELang.RU })}
         type="button"
         onClick={() => setLang(ELang.RU)}
       >
         RU
       </button>
       <button
-        className={clsx($style['select-lang_button'], { [$style['select-lang_button_active']]: lang === ELang.EN })}
+        className={clsx($style['select-lang__button'], { [$style['select-lang__button_active']]: lang === ELang.EN })}
         type="button"
         onClick={() => setLang(ELang.EN)}
       >
