@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
-import { Layout } from '../widgets';
-import React from 'react';
+import { Layout } from '../app/layout';
+import React, { useTransition } from 'react';
 
 const children = () => <main style={{ height: '2000px' }}>Hello world!</main>;
 

@@ -1,0 +1,14 @@
+.field {
+
+  &__input {
+    --bg: #3B82F6;
+    outline: none;
+    border-left: none;
+    border-right: none;
+    border: 1px solid var(--bg);
+    padding: .5rem;
+    line-height: 1rem;
+    flex: 1;
+    min-width: 1px;
+  }
+}

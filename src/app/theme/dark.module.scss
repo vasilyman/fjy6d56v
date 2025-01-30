@@ -1,0 +1,15 @@
+.theme {
+  --bg: black;
+  --text: white;
+
+  --bg-contrast-1: rgb(37, 37, 37);
+  --bg-contrast-2: rgb(61, 61, 61);
+  
+  --bg-primary: #3B82F6;
+  --text-primary: #ffffff;
+
+  --bg-primary-contrast-1: #93C5FD;
+
+  color: var(--text);
+  background: var(--bg);
+}

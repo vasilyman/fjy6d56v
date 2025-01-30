@@ -1,6 +1,7 @@
-import React, { FC, FormEventHandler } from 'react';
+import React, { FC, FormEventHandler, useContext } from 'react';
 import cn from 'clsx';
 import $style from './style.module.scss';
+import { Field, FieldContext } from '../field';
 
 interface NumberInputProps {
   value: number;
@@ -16,6 +17,7 @@ interface NumberInputProps {
  */
 
 export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value, max, min, block }) => {
+  const { fieldStyleModule } = useContext(FieldContext);
   const maximum = Math.min(max ?? Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
   const minimum = min;
 
@@ -45,7 +47,7 @@ export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value
         type="number"
         title={value.toString()}
         onInput={onInputLocal}
-        className={$style['input-number__input']}
+        className={cn(fieldStyleModule['field__input'], $style['input-number__input'])}
         value={value}
         max={maximum}
         min={minimum}
@@ -61,4 +63,12 @@ export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value
   );
 };
 
-export const NumberInput = React.memo(NumberInputRaw);
+const NumberInputNotMemoized: FC<NumberInputProps> = ({ onInput, className, value, max, min, block }) => {
+  return (
+    <Field>
+      <NumberInputRaw onInput={onInput} className={className} value={value} max={max} min={min} block={block} />
+    </Field>
+  );
+};
+
+export const NumberInput = React.memo(NumberInputNotMemoized);

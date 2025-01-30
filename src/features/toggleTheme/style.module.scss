@@ -1,0 +1,34 @@
+.toggle-theme {
+  --h: 2rem;
+  border: none;
+  padding: 0px;
+  box-shadow: none;
+  box-sizing: border-box;
+  height: var(--h);
+  aspect-ratio: 1.75;
+  border-radius: 999px;
+  background: var(--bg-contrast-1);
+  position: relative;
+  --toggle-color: var(--bg-contrast-2);
+  --toggle-translate: 0px;
+  cursor: pointer;
+
+  // state
+  &_active {
+    --toggle-color: var(--bg-primary);
+    --toggle-translate: calc(var(--h) * .725) 0px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--h) * .125);
+    top: calc(var(--h) * .125);
+    width: calc(var(--h) * .75);
+    aspect-ratio: 1;
+    background: var(--toggle-color);
+    border-radius: 999px;
+    transition: translate .3s;
+    translate: var(--toggle-translate);
+  }
+}

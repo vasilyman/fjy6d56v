@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import $style from './style.module.scss';
 import cn from 'clsx';
 import { Button } from '../../shared';
