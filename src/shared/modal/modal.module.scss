@@ -18,7 +18,7 @@
     height: 100vh;
     opacity: var(--overlay-opacity);
     background: rgba(85, 85, 85, 0.5);
-    transition: opacity .3s;
+    transition: opacity 1s;
   }
 
   &__wrapper {
@@ -31,7 +31,7 @@
     left: 50vw;
     top: 50vh;
     transform: translate(-50%, -50%);
-    transition: opacity .3s;
+    transition: opacity 1s;
   }
 }
 
@@ -43,7 +43,7 @@
   height: 1.25rem;
   cursor: pointer;
   border-radius: 999px;
-  transition: background .3s;
+  transition: background 1s;
   display: flex;
   align-items: center;
   justify-content: center;

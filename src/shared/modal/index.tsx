@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useId, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import cn from 'clsx';
 import $style from './modal.module.scss';
 import { Sheet } from '../sheet';
@@ -11,35 +11,40 @@ interface ModalProps {
   onClose?: () => void;
 }
 
+const waitTransition = async (el: HTMLElement) => {
+  if (!el) return;
+  return new Promise((res) => {
+    el.addEventListener('transitionend', res, { once: true });
+  });
+};
+
 export const Modal: FC<ModalProps> = ({ visible, children, onClose }) => {
-  const [isShowed, setIsShowed] = useState(visible);
   const [isShowedWrapper, setIsShowedWrapper] = useState(visible);
 
-  const modalRef = useRef(null);
-  const waitTransition = async () => {
-    if (!modalRef.current) return;
-    return new Promise((res) => {
-      modalRef.current.addEventListener('transitionend', res, { once: true });
-    });
-  };
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const el = modalRef.current;
     if (visible) {
-      setIsShowedWrapper(true);
-      setTimeout(() => {
-        if (isShowedWrapper) setIsShowed(true);
-      }, 0);
+      requestAnimationFrame(() => {
+        setIsShowedWrapper(true);
+        requestAnimationFrame(() => {
+          el?.classList.toggle($style['modal_opened'], true);
+        });
+      });
     } else {
-      setIsShowed(false);
-      setTimeout(() => {
-        if (!isShowed) waitTransition().then(() => setIsShowedWrapper(false));
-      }, 0);
+      requestAnimationFrame(() => {
+        el?.classList.toggle($style['modal_opened'], false);
+        requestAnimationFrame(() => {
+          waitTransition(el).then(() => setIsShowedWrapper(false));
+        });
+      });
     }
-  }, [visible, isShowedWrapper, isShowed]);
+  }, [visible, isShowedWrapper]);
 
   return isShowedWrapper ? (
     <AppPortal>
-      <div ref={modalRef} className={cn($style['modal'], { [$style['modal_opened']]: isShowed })}>
+      <div ref={modalRef} className={cn($style['modal'])}>
         <div className={$style['modal__overlay']} />
         <div className={$style['modal__wrapper']}>
           <div className={$style['modal-close']}>
