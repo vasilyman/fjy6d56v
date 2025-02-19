@@ -1,9 +1,11 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'clsx';
 import $style from './modal.module.scss';
 import { Sheet } from '../sheet';
 import { Icon } from '../icon';
 import { AppPortal } from '../appPortal';
+import anime from 'animejs';
+import fastdom from 'fastdom';
 
 interface ModalProps {
   visible: boolean;
@@ -11,36 +13,63 @@ interface ModalProps {
   onClose?: () => void;
 }
 
-const waitTransition = async (el: HTMLElement) => {
-  if (!el) return;
-  return new Promise((res) => {
-    el.addEventListener('transitionend', res, { once: true });
-  });
-};
-
 export const Modal: FC<ModalProps> = ({ visible, children, onClose }) => {
   const [isShowedWrapper, setIsShowedWrapper] = useState(visible);
 
+  const DURATION = 300;
+
   const modalRef = useRef<HTMLDivElement>(null);
+  const progressProxy = useRef(0);
+  const updateOpacity = useCallback(
+    (val: number) => {
+      if (!modalRef.current) return;
+      fastdom.mutate(() => {
+        modalRef.current.style.setProperty('--overlay-opacity', `${val}`);
+        modalRef.current.style.setProperty('--wrapper-opacity', `${val}`);
+      });
+    },
+    [modalRef]
+  );
+
+  const open = useCallback(() => {
+    anime.remove(progressProxy);
+    setIsShowedWrapper(true);
+    anime({
+      targets: progressProxy,
+      current: 1,
+      update() {
+        updateOpacity(progressProxy.current);
+      },
+      duration: DURATION,
+      easing: 'easeInOutSine',
+    });
+  }, [updateOpacity]);
+
+  const close = useCallback(() => {
+    anime.remove(progressProxy);
+    anime({
+      targets: progressProxy,
+      current: 0,
+      update() {
+        updateOpacity(progressProxy.current);
+      },
+      duration: DURATION,
+      easing: 'easeInOutSine',
+      complete() {
+        fastdom.mutate(() => {
+          setIsShowedWrapper(false);
+        });
+      },
+    });
+  }, [updateOpacity]);
 
   useEffect(() => {
-    const el = modalRef.current;
     if (visible) {
-      requestAnimationFrame(() => {
-        setIsShowedWrapper(true);
-        requestAnimationFrame(() => {
-          el?.classList.toggle($style['modal_opened'], true);
-        });
-      });
+      open();
     } else {
-      requestAnimationFrame(() => {
-        el?.classList.toggle($style['modal_opened'], false);
-        requestAnimationFrame(() => {
-          waitTransition(el).then(() => setIsShowedWrapper(false));
-        });
-      });
+      close();
     }
-  }, [visible, isShowedWrapper]);
+  }, [visible, open, close]);
 
   return isShowedWrapper ? (
     <AppPortal>
