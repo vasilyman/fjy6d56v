@@ -1,31 +1,28 @@
-import React, { createRef, FC, PropsWithChildren, RefObject, useEffect, useRef, useState } from 'react';
-import cn from 'clsx';
+import React, { isValidElement, PropsWithChildren, useEffect, useRef } from 'react';
+import $style from './style.module.scss';
 
-type InfiniteListProps<T extends { id: string } & PropsWithChildren> = {
+type InfiniteListProps<T extends { id: string; pending?: boolean } & PropsWithChildren> = {
   items: T[];
   ItemComponent: React.ComponentType<T>;
+  FallbackComponent?: React.ComponentType;
   onScrollEnd?: () => void;
 };
 
-const Fallback = ({ height }: { height?: number }) => {
-  return <div style={{ height: height ? `${height}px` : '100px' }} />;
+const Fallback = () => {
+  return <div className={$style['infinite-list__fallback']}>Loading...</div>;
 };
 
-export const InfiniteList = <T extends { id: string } & PropsWithChildren>({
+export const InfiniteList = <T extends { id: string; pending?: boolean } & PropsWithChildren>({
   items,
   ItemComponent,
+  FallbackComponent,
   onScrollEnd,
 }: InfiniteListProps<T>) => {
-  const [viewed, setViewed] = useState(() => new Map<Element, { height: number; show: boolean }>());
-
-  const itemRefs = useRef<RefObject<HTMLDivElement>[]>([]);
-  itemRefs.current = items.map((_, i) => itemRefs.current[i] ?? createRef());
-
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const options = {
-      rootMargin: '0px 0px 100px 0px',
+      rootMargin: '200px 0px 200px 0px',
       threshold: 0,
     };
 
@@ -36,48 +33,32 @@ export const InfiniteList = <T extends { id: string } & PropsWithChildren>({
           if (onScrollEnd) onScrollEnd();
           return;
         }
-
-        if (entry.isIntersecting) {
-          setViewed((viewed) => {
-            const old = viewed.get(entry.target);
-            viewed.set(entry.target, { ...old, show: true });
-            return new Map(viewed);
-          });
-        } else {
-          setViewed((viewed) => {
-            const height = entry.target.getBoundingClientRect().height;
-            viewed.set(entry.target, { height, show: false });
-            return new Map(viewed);
-          });
-        }
       });
     };
 
     const observer = new IntersectionObserver(callback, options);
-
-    for (const target of itemRefs.current) {
-      observer.observe(target.current);
-    }
 
     observer.observe(endRef.current);
 
     return () => {
       observer.disconnect();
     };
-  }, [itemRefs, onScrollEnd]);
+  }, [onScrollEnd, items]);
 
   return (
     <>
-      {items.map((item, i) => (
-        <div ref={itemRefs.current[i]} key={item.id}>
-          {viewed.get(itemRefs.current[i].current)?.show ? (
-            <ItemComponent {...item} />
+      {items.map((item) =>
+        item.pending ? (
+          FallbackComponent ? (
+            <FallbackComponent key={`fallback-${item.id}`} />
           ) : (
-            <Fallback height={viewed.get(itemRefs.current[i].current)?.height} />
-          )}
-        </div>
-      ))}
-      <div ref={endRef} />
+            <Fallback key={`fallback-${item.id}`} />
+          )
+        ) : (
+          <ItemComponent key={`component-${item.id}`} {...item} />
+        )
+      )}
+      <div ref={endRef} className={$style['infinite-list__end']} />
     </>
   );
 };

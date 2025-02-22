@@ -16,4 +16,9 @@
         display: block;
         width: 100%;
     }
+
+    &[disabled] {
+        --bg: #eee;
+        cursor: default;
+    }
 }

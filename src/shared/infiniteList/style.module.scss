@@ -1,0 +1,16 @@
+.infinite-list {
+  &__end {
+    box-sizing: border-box;
+    height: 1px;
+    margin-top: -1px;
+  }
+
+  &__fallback {
+    color: gray;
+    box-sizing: border-box;
+    height: 100px;
+    background: #eee;
+    text-align: center;
+    padding-top: 42px;
+  }
+}

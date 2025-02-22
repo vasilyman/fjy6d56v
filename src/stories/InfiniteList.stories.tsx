@@ -22,8 +22,8 @@ const getItems = () => {
         id: `${items.length + i}`,
         sum: 200,
         type: 'type',
-        title: `Title ${items.length + i}`,
-        description: 'description',
+        title: `Operation ${items.length + i}`,
+        description: 'Operation description',
       }))
   );
 
