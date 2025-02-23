@@ -20,6 +20,7 @@ export const Modal: FC<ModalProps> = ({ visible, children, onClose }) => {
 
   const modalRef = useRef<HTMLDivElement>(null);
   const progressProxy = useRef(0);
+
   const updateOpacity = useCallback(
     (val: number) => {
       if (!modalRef.current) return;

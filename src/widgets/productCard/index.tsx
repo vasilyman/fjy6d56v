@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, memo, useState } from 'react';
 import $style from './style.module.scss';
 import { Sheet } from '../../shared';
 import cn from 'clsx';
@@ -37,3 +37,5 @@ export const ProductCard: FC<ProductCardProps> = ({ sum, imgUrl, title, descript
     </Sheet>
   );
 };
+
+export const ProductCardMemoized = memo(ProductCard);

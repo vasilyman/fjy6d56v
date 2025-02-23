@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, { FC, memo, useCallback, useEffect, useRef, useState } from 'react';
 import $style from './style.module.scss';
 import cn from 'clsx';
-import { ProductCard } from '../productCard';
+import { ProductCard, ProductCardMemoized } from '../productCard';
 import { InfiniteList } from '../../shared/infiniteList';
 import { Button } from '../../shared/button';
 
@@ -49,6 +49,8 @@ const getEmptyItem = (id: string): IProduct => ({
 });
 
 const Fallback = () => <ProductCard {...getEmptyItem('0')} loading />;
+
+const FallbackMemoized = memo(Fallback);
 
 export const ProductList: FC<ProductListProps> = ({ className, manualLoading }) => {
   const [products, setProducts] = useState<Map<string, IProduct>>(() => new Map());
@@ -103,8 +105,8 @@ export const ProductList: FC<ProductListProps> = ({ className, manualLoading }) 
       <div className={cn($style['product-list'], className)}>
         <InfiniteList
           items={[...products.values()]}
-          ItemComponent={ProductCard}
-          FallbackComponent={Fallback}
+          ItemComponent={ProductCardMemoized}
+          FallbackComponent={FallbackMemoized}
           onScrollEnd={onScrollEnd}
         />
       </div>

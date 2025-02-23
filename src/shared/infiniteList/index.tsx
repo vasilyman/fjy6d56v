@@ -1,7 +1,9 @@
-import React, { isValidElement, PropsWithChildren, useEffect, useRef } from 'react';
+import React, { memo, PropsWithChildren, useEffect, useRef } from 'react';
 import $style from './style.module.scss';
 
-type InfiniteListProps<T extends { id: string; pending?: boolean } & PropsWithChildren> = {
+type InfiniteListItemRequiredProps = { id: string; pending?: boolean };
+
+type InfiniteListProps<T extends InfiniteListItemRequiredProps & PropsWithChildren> = {
   items: T[];
   ItemComponent: React.ComponentType<T>;
   FallbackComponent?: React.ComponentType;
@@ -12,7 +14,9 @@ const Fallback = () => {
   return <div className={$style['infinite-list__fallback']}>Loading...</div>;
 };
 
-export const InfiniteList = <T extends { id: string; pending?: boolean } & PropsWithChildren>({
+const FallbackMemoized = memo(Fallback);
+
+export const InfiniteList = <T extends InfiniteListItemRequiredProps & PropsWithChildren>({
   items,
   ItemComponent,
   FallbackComponent,
@@ -52,7 +56,7 @@ export const InfiniteList = <T extends { id: string; pending?: boolean } & Props
           FallbackComponent ? (
             <FallbackComponent key={`fallback-${item.id}`} />
           ) : (
-            <Fallback key={`fallback-${item.id}`} />
+            <FallbackMemoized key={`fallback-${item.id}`} />
           )
         ) : (
           <ItemComponent key={`component-${item.id}`} {...item} />

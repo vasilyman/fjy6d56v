@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 import { InfiniteList } from '../shared/infiniteList';
-import { OperationShort } from '../widgets/operationShort';
+import { OperationShortMemoized } from '../widgets/operationShort';
 import React from 'react';
 import { useArgs } from '@storybook/preview-api';
 
@@ -51,7 +51,7 @@ const meta: Meta<typeof InfiniteList<Item>> = {
   },
   args: {
     items,
-    ItemComponent: OperationShort,
+    ItemComponent: OperationShortMemoized,
     onScrollEnd: getItems,
   },
 };

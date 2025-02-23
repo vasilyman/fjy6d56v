@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import cn from 'clsx';
 import $style from './style.module.scss';
 
@@ -14,7 +14,7 @@ interface ButtonProps {
  * Primary UI component for user interaction
  */
 
-export const Button: FC<ButtonProps> = ({ label, onClick, className, block, type, disabled }) => {
+const ButtonComponent: FC<ButtonProps> = ({ label, onClick, className, block, type, disabled }) => {
   return (
     <button
       type={type ?? 'button'}
@@ -26,3 +26,5 @@ export const Button: FC<ButtonProps> = ({ label, onClick, className, block, type
     </button>
   );
 };
+
+export const Button = memo(ButtonComponent);
