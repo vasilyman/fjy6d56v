@@ -3,6 +3,7 @@ import cn from 'clsx';
 import $style from './sheet.module.scss';
 
 interface SheetProps {
+  id?: string;
   children?: React.ReactNode;
   className?: string;
 }

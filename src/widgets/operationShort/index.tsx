@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import $style from './style.module.scss';
 import { Sheet } from '../../shared';
 import cn from 'clsx';
@@ -27,3 +27,5 @@ export const OperationShort: FC<OperationShortProps> = ({ sum, type, title, desc
     </Sheet>
   );
 };
+
+export const OperationShortMemoized = memo(OperationShort);
