@@ -1,0 +1,35 @@
+.range-input {
+  box-sizing: border-box;
+  width: 100%;
+
+  &__inputs {
+    box-sizing: border-box;
+    display: flex;
+    border: 1px solid #bbb;
+    border-bottom: 4px solid #bbb;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    flex: 1;
+    min-width: 1px;
+    border: none;
+    padding: .5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:last-child {
+      text-align: right;
+    }
+
+    &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+      appearance: none;
+    }
+  }
+
+  &__slider {
+    box-sizing: border-box;
+    padding: 0 .25rem;
+    margin-top: calc(-.5rem - 2px);
+  }
+}
