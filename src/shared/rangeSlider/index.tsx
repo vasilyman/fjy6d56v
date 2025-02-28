@@ -71,7 +71,7 @@ export const RangeSlider = <T extends TValue>({ value, min, max, className, step
     updProgress();
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!trackRef.current) return;
 
     const resizeObserver = new ResizeObserver(([entry]) => {
