@@ -1,4 +1,4 @@
-import React, { FC, FormEventHandler, useContext } from 'react';
+import React, { FC, FormEventHandler, useCallback, useContext, useLayoutEffect, useRef, useState } from 'react';
 import cn from 'clsx';
 import $style from './style.module.scss';
 import { Field, FieldContext } from '../field';
@@ -10,63 +10,90 @@ interface NumberInputProps {
   max?: number;
   min?: number;
   block?: boolean;
+  onlyInput?: boolean;
 }
 /**
  * NumberInput
  * TODO: fix cursor position
  */
 
-export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value, max, min, block }) => {
+export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value, max, min, block, onlyInput }) => {
+  const [localValue, setLocalValue] = useState(value);
+
+  useLayoutEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  const onUserInput = useCallback(
+    (val: number) => {
+      if (val === value) return;
+      onInput(val);
+      setLocalValue(val);
+    },
+    [onInput, value]
+  );
+
   const { fieldStyleModule } = useContext(FieldContext);
-  const maximum = Math.min(max ?? Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
-  const minimum = min;
+  const maximum = useRef(Math.min(max ?? Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER));
+  const minimum = useRef(min);
 
-  const onInputLocal: FormEventHandler<HTMLInputElement> = (e) => {
-    const val = Number(e.currentTarget.value);
-    if (!Number.isNaN(val)) onInput(val);
-  };
+  const onInputLocal: FormEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      const val = Number(e.currentTarget.value);
+      if (Number.isNaN(val)) return;
 
-  const onAdd = () => {
-    if (value + 1 <= maximum) onInput(value + 1);
-  };
+      onUserInput(val);
+    },
+    [onUserInput]
+  );
 
-  const onSub = () => {
-    if (min === undefined || value - 1 >= minimum) onInput(value - 1);
-  };
+  const onAdd = useCallback(() => {
+    if (localValue + 1 > maximum.current) return;
+    onUserInput(localValue + 1);
+  }, [onUserInput, localValue]);
+
+  const onSub = useCallback(() => {
+    if (minimum.current !== undefined && localValue - 1 < minimum.current) return;
+    onUserInput(localValue - 1);
+  }, [onUserInput, localValue]);
 
   return (
     <div className={cn($style['input-number'], className, { [$style['input-number_block']]: block })}>
-      <button
-        type="button"
-        className={cn($style['input-number__button'], $style['input-number__button_left'])}
-        onClick={onSub}
-      >
-        -
-      </button>
+      {!onlyInput && (
+        <button
+          type="button"
+          className={cn($style['input-number__button'], $style['input-number__button_left'])}
+          onClick={onSub}
+        >
+          -
+        </button>
+      )}
       <input
         type="number"
-        title={value.toString()}
+        title={localValue.toString()}
         onInput={onInputLocal}
         className={cn(fieldStyleModule['field__input'], $style['input-number__input'])}
-        value={value}
-        max={maximum}
-        min={minimum}
+        value={localValue}
+        max={maximum.current}
+        min={minimum.current}
       />
-      <button
-        type="button"
-        className={cn($style['input-number__button'], $style['input-number__button_right'])}
-        onClick={onAdd}
-      >
-        +
-      </button>
+      {!onlyInput && (
+        <button
+          type="button"
+          className={cn($style['input-number__button'], $style['input-number__button_right'])}
+          onClick={onAdd}
+        >
+          +
+        </button>
+      )}
     </div>
   );
 };
 
-const NumberInputNotMemoized: FC<NumberInputProps> = ({ onInput, className, value, max, min, block }) => {
+const NumberInputNotMemoized: FC<NumberInputProps> = (props) => {
   return (
     <Field>
-      <NumberInputRaw onInput={onInput} className={className} value={value} max={max} min={min} block={block} />
+      <NumberInputRaw {...props} />
     </Field>
   );
 };
