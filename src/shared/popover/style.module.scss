@@ -1,0 +1,13 @@
+.popover {
+  &__activator {
+    display: inline-block;
+  }
+
+  &__content {
+    position: absolute;
+  }
+
+  &__arrow {
+    position: absolute;
+  }
+}
