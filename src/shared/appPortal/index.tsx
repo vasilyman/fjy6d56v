@@ -1,7 +1,16 @@
-import { FC, PropsWithChildren, useId } from 'react';
+import { FC, ReactNode, useId, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
-export const AppPortal: FC<PropsWithChildren> = ({ children }) => {
+type AppPortapProps = {
+  children: ReactNode;
+  /** default: document.body */
+  to?: string;
+};
+
+export const AppPortal: FC<AppPortapProps> = ({ children, to }) => {
   const key = useId();
-  return createPortal(children, document.body, key);
+  const mountTo = useMemo(() => {
+    return to ? document.querySelector(to) : document.body;
+  }, [to]);
+  return createPortal(children, mountTo, key);
 };
