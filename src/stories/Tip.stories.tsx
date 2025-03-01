@@ -3,7 +3,7 @@ import { Tip } from '../shared/tip';
 import React from 'react';
 
 const meta: Meta<typeof Tip> = {
-  title: 'Widgets/Tip',
+  title: 'Components/Tip',
   component: Tip,
   decorators: [
     (Story) => (
@@ -15,7 +15,11 @@ const meta: Meta<typeof Tip> = {
   render: function Render(args) {
     return (
       <>
-        Lorem ispum text <Tip {...args}>suggestion</Tip> lorem ispum text.
+        Lorem ispum text{' '}
+        <Tip {...args}>
+          <b>suggestion</b>
+        </Tip>{' '}
+        lorem ispum text.
       </>
     );
   },

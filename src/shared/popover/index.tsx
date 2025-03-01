@@ -4,15 +4,16 @@ import React, {
   memo,
   ReactElement,
   ReactNode,
+  useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from 'react';
 import { AppPortal } from '../appPortal';
 import cn from 'clsx';
 import $style from './style.module.scss';
-import { useElRect } from '../lib/useElRect';
+import { RectPos, useElRect } from '../lib/useElRect';
+import { isEqual } from 'lodash';
 
 type PopoverActivatorProps = {
   children: ReactNode;
@@ -32,7 +33,7 @@ type PopoverProps = {
   onInput?: (v: boolean) => void;
 };
 
-type ActivatorRect = { left: number; top: number; height: number; pageLeft: number; pageTop: number };
+type ActivatorRect = { height: number; pageLeft: number; pageTop: number };
 
 export enum Position {
   TOP,
@@ -44,7 +45,7 @@ export const PopoverContext = createContext<{
   to?: string;
   showOnHover?: boolean;
   activatorRect: ActivatorRect;
-  setActivatorRect: (v: ActivatorRect) => void;
+  setActivatorRect: (v: ActivatorRect | ((v: ActivatorRect) => void)) => void;
   setValue: (v: boolean) => void;
   activatorHovered: boolean;
   setActivatorHovered: (v: boolean) => void;
@@ -53,7 +54,7 @@ export const PopoverContext = createContext<{
   contentHeight: number;
   setContentHeight: (v: number) => void;
   position: Position;
-  setPosition: (v: Position) => void;
+  setPosition: (v: Position | ((v: Position) => void)) => void;
 }>(undefined);
 
 const usePopover = () => {
@@ -79,14 +80,12 @@ interface PopoverComponent extends FC<PopoverProps> {
 export const Popover: PopoverComponent = ({ value, showOnHover, to, children, onInput }: PopoverProps) => {
   const [localValue, setLocalValue] = useState<boolean>(value);
   const [activatorRect, setActivatorRect] = useState<ActivatorRect>({
-    left: 0,
-    top: 0,
     height: 0,
     pageLeft: 0,
     pageTop: 0,
   });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setLocalValue(value);
   }, [value]);
 
@@ -133,7 +132,7 @@ export const Popover: PopoverComponent = ({ value, showOnHover, to, children, on
 };
 
 const PopoverActivator: FC<PopoverActivatorProps> = ({ children }) => {
-  const { value, setValue, setActivatorRect, setActivatorHovered } = usePopover();
+  const { value, setValue, setActivatorRect, setActivatorHovered, setPosition, contentHeight } = usePopover();
 
   const activatorRef = useRef<HTMLDivElement | null>(null);
 
@@ -153,13 +152,23 @@ const PopoverActivator: FC<PopoverActivatorProps> = ({ children }) => {
     toggleValue();
   };
 
-  const onChange = ({ left, pageLeft, pageTop, top, height }: ActivatorRect) => {
-    setActivatorRect({ left, pageLeft, top, pageTop, height });
-  };
+  const contentHeightObj = useRef(contentHeight);
+  useEffect(() => {
+    contentHeightObj.current = contentHeight;
+  }, [contentHeight]);
+
+  const onChange = useCallback(({ pageLeft, pageTop, top, height }: Partial<RectPos>) => {
+    setPosition(() => (top < contentHeightObj.current ? Position.BOTTOM : Position.TOP));
+
+    setActivatorRect((oldVal) => {
+      const newVal: ActivatorRect = { pageLeft, pageTop, height };
+      return isEqual(oldVal, newVal) ? oldVal : newVal;
+    });
+  }, []);
 
   useElRect({ el: activatorRef, elShowed: value, onChange });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = activatorRef.current;
 
     el.addEventListener('pointerover', onHover);
@@ -181,7 +190,7 @@ const PopoverActivator: FC<PopoverActivatorProps> = ({ children }) => {
 Popover.Activator = memo(PopoverActivator);
 
 const PopoverContent: FC<PopoverContentProps> = ({ children }) => {
-  const { value, to, activatorRect, setContentHovered, contentHeight, setContentHeight, setPosition } = usePopover();
+  const { value, to, activatorRect, setContentHovered, contentHeight, setContentHeight, position } = usePopover();
 
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -189,21 +198,19 @@ const PopoverContent: FC<PopoverContentProps> = ({ children }) => {
     setContentHeight(height);
   };
 
-  useElRect({ el: contentRef, elShowed: value, onResize });
+  useElRect({ el: contentRef, elShowed: value, onResize, sync: true });
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!contentRef.current || Number.isNaN(contentHeight)) return;
 
-    if (activatorRect.top < contentHeight) {
+    if (position === Position.BOTTOM) {
       contentRef.current.style.top = `${activatorRect.pageTop + activatorRect.height}px`;
-      setPosition(Position.BOTTOM);
     } else {
       contentRef.current.style.top = `${activatorRect.pageTop - contentHeight}px`;
-      setPosition(Position.TOP);
     }
 
     contentRef.current.style.left = `${activatorRect.pageLeft}px`;
-  }, [activatorRect, value, contentHeight, setPosition]);
+  }, [activatorRect, value, contentHeight, position]);
 
   const onHover = () => {
     setContentHovered(true);
@@ -213,7 +220,7 @@ const PopoverContent: FC<PopoverContentProps> = ({ children }) => {
     setContentHovered(false);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
 

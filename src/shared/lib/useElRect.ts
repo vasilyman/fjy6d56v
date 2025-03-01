@@ -1,21 +1,30 @@
-import { RefObject, useLayoutEffect, useRef } from 'react';
+import debounce from 'lodash/debounce';
+import { RefObject, useEffect, useRef } from 'react';
+import { flushSync } from 'react-dom';
 
-type Rect = { width: number; height: number };
-type Position = { top: number; left: number; pageTop: number; pageLeft: number };
-type RectPos = Partial<Rect & Position>;
+export type Rect = { width: number; height: number };
+export type Position = { top: number; left: number; pageTop: number; pageLeft: number };
+export type RectPos = Partial<Rect & Position>;
 
 type UseElRect = {
   el: RefObject<HTMLElement>;
+  /** state for watching el */
   elShowed: boolean;
+  /** wrap callbacks to flushSync for immediate render when you setState inside */
+  sync?: boolean;
   onResize?: (v: Rect) => void;
   onMove?: (v: Position) => void;
   onChange?: (v: RectPos) => void;
 };
 
-export const useElRect = ({ el, elShowed, onResize, onMove, onChange }: UseElRect): void => {
+export const useElRect = ({ el, elShowed, sync, onResize, onMove, onChange }: UseElRect): void => {
   const rect = useRef<RectPos>({});
 
-  useLayoutEffect(() => {
+  const onMoveDebounced = debounce((v) => (onMove ? onMove(v) : undefined), 16);
+  const onChangeDebounced = debounce((v) => (onChange ? onChange(v) : undefined), 16);
+  const onResizeDebounced = debounce((v) => (onResize ? onResize(v) : undefined), 16);
+
+  useEffect(() => {
     const element = el.current;
     if (!element) return;
 
@@ -26,8 +35,15 @@ export const useElRect = ({ el, elShowed, onResize, onMove, onChange }: UseElRec
       rect.current.width = width;
       rect.current.height = height;
 
-      if (onResize) onResize({ width, height });
-      if (onChange) onChange(rect.current);
+      if (sync) {
+        flushSync(() => {
+          onResizeDebounced({ width, height });
+          onChangeDebounced(rect.current);
+        });
+      } else {
+        onResizeDebounced({ width, height });
+        onChangeDebounced(rect.current);
+      }
     });
 
     resizeObserver.observe(element);
@@ -37,7 +53,7 @@ export const useElRect = ({ el, elShowed, onResize, onMove, onChange }: UseElRec
     };
   }, [elShowed]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const element = el.current;
     if (!element) return;
 
@@ -52,8 +68,13 @@ export const useElRect = ({ el, elShowed, onResize, onMove, onChange }: UseElRec
       rect.current.pageLeft = val.pageLeft;
       rect.current.left = left;
 
-      if (onMove) onMove(val);
-      if (onChange) onChange(rect.current);
+      if (sync) {
+        onMoveDebounced(val);
+        onChangeDebounced(rect.current);
+      } else {
+        onMoveDebounced(val);
+        onChangeDebounced(rect.current);
+      }
     };
 
     onScrollOrResize();

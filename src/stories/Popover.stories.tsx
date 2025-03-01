@@ -6,7 +6,7 @@ const PopoverExample: FC = ({ showOnHover }: { showOnHover: boolean }) => {
   return (
     <>
       <Popover showOnHover={showOnHover}>
-        <Popover.Activator>Hover me</Popover.Activator>
+        <Popover.Activator>{showOnHover ? 'Hover me' : 'Click on me'}</Popover.Activator>
         <Popover.Content>Content text</Popover.Content>
       </Popover>
     </>
@@ -14,7 +14,7 @@ const PopoverExample: FC = ({ showOnHover }: { showOnHover: boolean }) => {
 };
 
 const meta: Meta<typeof PopoverExample> = {
-  title: 'Widgets/Popover',
+  title: 'Components/Popover',
   component: PopoverExample,
   decorators: [
     (Story) => (
