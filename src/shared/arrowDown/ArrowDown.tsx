@@ -8,7 +8,5 @@ export const ArrowDown: FC<{ onClick?: () => void }> = (props) => {
     props.onClick();
   };
 
-  return (
-    <div className='arrow-down' onClick={onClick} />
-  );
+  return <div className="arrow-down" onClick={onClick} />;
 };
