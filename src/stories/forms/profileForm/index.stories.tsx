@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ProfileForm } from '../../../features/forms/profileForm';
 import React, { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { ProfileFormData } from 'src/features/forms/profileForm/type';
 
 const Component: FC = () => {
-  const { control } = useForm<{ aboutField?: string; nameField?: string }>({
+  const { control } = useForm<ProfileFormData>({
     defaultValues: {
       nameField: 'initial value',
       aboutField: 'initial value',

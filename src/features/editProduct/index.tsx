@@ -1,25 +1,27 @@
 import type { FC } from 'react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { ProfileForm } from '../forms/profileForm';
+import { ProductForm } from '../forms/productForm';
 import { Button } from '../../shared/button';
 import $style from './style.module.scss';
-import type { ProfileFormData } from '../forms/profileForm/type';
+import type { ProductFormData } from '../forms/productForm/type';
 
-export const EditProfile: FC = () => {
+export const EditProduct: FC = () => {
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<ProfileFormData>({
+  } = useForm<ProductFormData>({
     defaultValues: {
-      nameField: 'initial value',
-      aboutField: 'initial value',
+      imgUrl: '#',
+      title: 'initial value',
+      description: 'initial value',
+      sum: 0,
     },
     mode: 'all',
   });
 
-  const onSubmit = async (data: ProfileFormData) => {
+  const onSubmit = async (data: ProductFormData) => {
     const res = await new Promise((res) => {
       setTimeout(() => {
         res(data);
@@ -29,8 +31,8 @@ export const EditProfile: FC = () => {
   };
 
   return (
-    <div className={$style['edit-profile']}>
-      <ProfileForm control={control} />
+    <div className={$style['edit-product']}>
+      <ProductForm control={control} />
       <Button label="Сохранить" block disabled={isSubmitting} onClick={handleSubmit(onSubmit)} />
     </div>
   );
