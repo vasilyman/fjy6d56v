@@ -3,8 +3,9 @@ import React from 'react';
 import { Input } from '../../../shared/input';
 import { Controller } from 'react-hook-form';
 import { FormProps } from '../types';
+import type { ProfileFormData } from './type';
 
-export const NameField: FC<FormProps<{ nameField?: string }>> = ({ control }) => {
+export const NameField: FC<FormProps<ProfileFormData>> = ({ control }) => {
   return (
     <Controller
       control={control}

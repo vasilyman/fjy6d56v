@@ -1,25 +1,30 @@
 import type { FC } from 'react';
 import React from 'react';
-import { Textarea } from '../../../shared/textarea';
+import { Input } from '../../../shared/input';
 import { useController } from 'react-hook-form';
 import { FormProps } from '../types';
-import type { ProfileFormData } from './type';
+import type { ProductFormData } from './type';
 
-export const AboutField: FC<FormProps<ProfileFormData>> = ({ control }) => {
+export const TitleField: FC<FormProps<ProductFormData>> = ({ control }) => {
   const { field, fieldState, formState } = useController({
-    name: 'aboutField',
+    name: 'title',
     control,
     rules: {
+      required: 'This is required',
+      pattern: {
+        value: /^[\w\s-]*$/i,
+        message: 'Dont use special chars',
+      },
       maxLength: {
-        value: 1000,
-        message: 'This input exceed maxLength 1000',
+        value: 100,
+        message: 'This input exceed maxLength 100',
       },
     },
   });
 
   return (
-    <Textarea
-      label="About"
+    <Input
+      label="Title"
       value={field.value}
       error={fieldState.error?.message}
       disabled={formState.isSubmitting}

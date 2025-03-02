@@ -4,10 +4,12 @@ import { Field, FieldContext } from '../field';
 type InputElement = {
   id?: string;
   className?: string;
-  type?: 'text' | 'password' | 'email' | 'phone';
+  type?: 'text' | 'password' | 'email' | 'phone' | 'number';
   value?: string;
   error?: boolean;
   disabled?: boolean;
+  min?: number;
+  max?: number;
   onChange?: (e: string) => void;
   onBlur?: (e: FocusEvent) => void;
 };
@@ -18,7 +20,18 @@ type Input = Omit<InputElement, 'error'> & {
   label?: string;
 };
 
-const InputElement: FC<InputElement> = ({ id, className, type, value, error, disabled, onChange, onBlur }) => {
+const InputElement: FC<InputElement> = ({
+  id,
+  className,
+  type,
+  value,
+  error,
+  disabled,
+  min,
+  max,
+  onChange,
+  onBlur,
+}) => {
   const { fieldStyleModule } = useContext(FieldContext);
 
   return (
@@ -27,6 +40,8 @@ const InputElement: FC<InputElement> = ({ id, className, type, value, error, dis
       type={type ?? 'text'}
       value={value}
       disabled={disabled}
+      min={min}
+      max={max}
       className={cn(fieldStyleModule['field__input'], className, error && fieldStyleModule['field__input_error'])}
       onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
       onBlur={(e) => onBlur && onBlur(e.nativeEvent)}
@@ -62,6 +77,8 @@ export const Input: FC<Input> = ({
   messages,
   label,
   disabled,
+  min,
+  max,
   onChange,
   onBlur,
 }) => {
@@ -75,6 +92,8 @@ export const Input: FC<Input> = ({
         value={value}
         error={!!error}
         disabled={disabled}
+        min={min}
+        max={max}
         onChange={onChange}
         onBlur={onBlur}
       />
