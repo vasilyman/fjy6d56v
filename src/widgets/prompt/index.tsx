@@ -1,4 +1,4 @@
-import type { ChangeEvent, FC } from 'react';
+import type { FC } from 'react';
 import React, { useState } from 'react';
 import { Button, Input, Modal } from '../../shared';
 
