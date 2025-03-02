@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import { RefObject, useEffect, useLayoutEffect, useRef } from 'react';
+import { RefObject, useLayoutEffect, useRef } from 'react';
 
 export type Rect = { width: number; height: number };
 export type Position = { top: number; left: number; pageTop: number; pageLeft: number };
