@@ -10,11 +10,12 @@ export const SignIn: FC = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm<LoginFormData>({
     defaultValues: {
-      email: 'initial@value',
-      password: 'initial value',
+      email: '',
+      password: '',
     },
     mode: 'all',
   });
@@ -26,6 +27,8 @@ export const SignIn: FC = () => {
       }, 1000);
     });
     console.log(res);
+
+    reset();
   };
 
   return (
