@@ -1,6 +1,5 @@
 import debounce from 'lodash/debounce';
-import { RefObject, useEffect, useRef } from 'react';
-import { flushSync } from 'react-dom';
+import { RefObject, useEffect, useLayoutEffect, useRef } from 'react';
 
 export type Rect = { width: number; height: number };
 export type Position = { top: number; left: number; pageTop: number; pageLeft: number };
@@ -10,21 +9,19 @@ type UseElRect = {
   el: RefObject<HTMLElement>;
   /** state for watching el */
   elShowed: boolean;
-  /** wrap callbacks to flushSync for immediate render when you setState inside */
-  sync?: boolean;
   onResize?: (v: Rect) => void;
   onMove?: (v: Position) => void;
   onChange?: (v: RectPos) => void;
 };
 
-export const useElRect = ({ el, elShowed, sync, onResize, onMove, onChange }: UseElRect): void => {
+export const useElRect = ({ el, elShowed, onResize, onMove, onChange }: UseElRect): void => {
   const rect = useRef<RectPos>({});
 
   const onMoveDebounced = debounce((v) => (onMove ? onMove(v) : undefined), 16);
   const onChangeDebounced = debounce((v) => (onChange ? onChange(v) : undefined), 16);
   const onResizeDebounced = debounce((v) => (onResize ? onResize(v) : undefined), 16);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = el.current;
     if (!element) return;
 
@@ -35,15 +32,8 @@ export const useElRect = ({ el, elShowed, sync, onResize, onMove, onChange }: Us
       rect.current.width = width;
       rect.current.height = height;
 
-      if (sync) {
-        flushSync(() => {
-          onResizeDebounced({ width, height });
-          onChangeDebounced(rect.current);
-        });
-      } else {
-        onResizeDebounced({ width, height });
-        onChangeDebounced(rect.current);
-      }
+      onResizeDebounced({ width, height });
+      onChangeDebounced(rect.current);
     });
 
     resizeObserver.observe(element);
@@ -53,7 +43,7 @@ export const useElRect = ({ el, elShowed, sync, onResize, onMove, onChange }: Us
     };
   }, [elShowed]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = el.current;
     if (!element) return;
 
@@ -68,13 +58,8 @@ export const useElRect = ({ el, elShowed, sync, onResize, onMove, onChange }: Us
       rect.current.pageLeft = val.pageLeft;
       rect.current.left = left;
 
-      if (sync) {
-        onMoveDebounced(val);
-        onChangeDebounced(rect.current);
-      } else {
-        onMoveDebounced(val);
-        onChangeDebounced(rect.current);
-      }
+      onMoveDebounced(val);
+      onChangeDebounced(rect.current);
     };
 
     onScrollOrResize();

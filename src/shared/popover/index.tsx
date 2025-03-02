@@ -194,14 +194,23 @@ const PopoverContent: FC<PopoverContentProps> = ({ children }) => {
 
   const contentRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    if (!contentRef.current) return;
+
+    contentRef.current.style.visibility = 'hidden';
+  }, [value]);
+
   const onResize = ({ height }: { height: number }) => {
+    if (!contentRef.current) return;
+
     setContentHeight(height);
+    contentRef.current.style.visibility = 'visible';
   };
 
-  useElRect({ el: contentRef, elShowed: value, onResize, sync: true });
+  useElRect({ el: contentRef, elShowed: value, onResize });
 
   useEffect(() => {
-    if (!contentRef.current || Number.isNaN(contentHeight)) return;
+    if (!contentRef.current) return;
 
     if (position === Position.BOTTOM) {
       contentRef.current.style.top = `${activatorRect.pageTop + activatorRect.height}px`;
