@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useArgs } from '@storybook/preview-api';
-import { AddToCard } from '../features';
+import { AddToCard } from '../../features';
 import React from 'react';
 
 const meta: Meta<typeof AddToCard> = {
