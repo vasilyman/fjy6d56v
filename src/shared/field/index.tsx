@@ -12,7 +12,11 @@ export const FieldContext = createContext<FieldContextType>(null);
 
 export const FieldProvider = ({ children }: PropsWithChildren) => {
   const [fieldStyleModule, setFieldStyleModule] = useState<TFieldStyleModule>($style);
-  return <FieldContext.Provider value={{ fieldStyleModule, setFieldStyleModule }}>{children}</FieldContext.Provider>;
+  return (
+    <FieldContext.Provider value={{ fieldStyleModule, setFieldStyleModule }}>
+      <div className={fieldStyleModule['field']}>{children}</div>
+    </FieldContext.Provider>
+  );
 };
 
 export const Field: FC<PropsWithChildren> = ({ children }) => {
