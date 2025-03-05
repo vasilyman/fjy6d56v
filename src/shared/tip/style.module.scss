@@ -1,0 +1,39 @@
+.tip {
+  position: relative;
+  box-sizing: border-box;
+
+  &__text {
+    background: #fff;
+    border-radius: .5rem;
+    box-sizing: border-box;
+    padding: 1rem;
+    box-shadow: 0 2px 7px 0 #44444470;
+    margin: .5rem;
+
+    &_bottom {
+      box-shadow: 0 -2px 7px 0 #44444470;
+    }
+  }
+
+  &__arrow {
+    pointer-events: none;
+    position: absolute;
+    box-sizing: border-box;
+    bottom: 0px;
+    translate: (1rem 1rem);
+    z-index: 1;
+    width: .5rem;
+    height: .5rem;
+    background: transparent;
+    border: .5rem solid transparent;
+    border-top-color: white;
+
+    &_bottom {
+      top: 0;
+      bottom: unset;
+      translate: (1rem -1rem);
+      border-top-color: transparent;
+      border-bottom-color: white;
+    }
+  }
+}
