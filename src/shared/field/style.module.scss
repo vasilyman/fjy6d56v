@@ -1,14 +1,85 @@
 .field {
+  --normal: var(--bg-primary);
+  --error: var(--text-error);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+
+  &__label {
+    box-sizing: border-box;
+    color: var(--text-light);
+    font-size: .75rem;
+    line-height: .5rem;
+    font-weight: bold;
+    flex: none;
+    width: auto;
+    position: relative;
+    left: .5rem;
+    top: 0;
+    translate: 0 50%;
+    background: var(--bg);
+    align-self: start;
+    padding: 0 .25rem;
+  }
 
   &__input {
-    --bg: #3B82F6;
     outline: none;
     border-left: none;
     border-right: none;
-    border: 1px solid var(--bg);
+    box-sizing: border-box;
+    border: 1px solid var(--normal);
+    background: var(--bg);
+    color: var(--text);
+    padding: .5rem;
+    line-height: 1rem;
+    min-width: 1px;
+    flex: 1;
+    width: 100%;
+    font-size: 1rem;
+
+    &_error {
+      border: 1px solid var(--error);
+    }
+
+    &[disabled] {
+      color: var(--text-light);
+      --normal: var(--bg-contrast-2);
+    }
+  }
+
+  &__textarea {
+    outline: none;
+    box-sizing: border-box;
+    border-left: none;
+    border-right: none;
+    border: 1px solid var(--normal);
+    background: var(--bg);
+    color: var(--text);
     padding: .5rem;
     line-height: 1rem;
     flex: 1;
     min-width: 1px;
+    resize: vertical;
+    width: 100%;
+    font-size: 1rem;
+
+    &_error {
+      border: 1px solid var(--error);
+    }
+
+    &[disabled] {
+      color: var(--text-light);
+      --normal: var(--bg-contrast-2);
+    }
+  }
+
+  &__error {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: .5rem 0;
+    font-size: .75rem;
+    color: var(--error);
   }
 }
