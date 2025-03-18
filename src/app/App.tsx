@@ -1,17 +1,9 @@
 import React from 'react';
-import { ThemeProvider } from './theme';
-import { Layout } from './layout';
-import { I18nProvider } from './i18n';
+import { RouterProvider } from 'react-router';
+import { router } from './routes';
 
 function App() {
-  return (
-    // TODO move providers to indexjs for wrapping App
-    <I18nProvider>
-      <ThemeProvider>
-        <Layout></Layout>
-      </ThemeProvider>
-    </I18nProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -3,6 +3,7 @@ import type { TCustomer } from '../customer';
 import { ECustomerType } from '../customerType';
 import type { TProduct } from '../product';
 import { EProductType } from '../productType';
+import mock from './mock.json';
 
 export type TOrderPositionRequest = {
   order: number;
@@ -76,10 +77,13 @@ const calcOrderPosition = (orderPosition: TOrderPositionRequest, customerType: E
 };
 
 class AccountService {
+  constructor() {
+    this._list = mock as TAccount[];
+  }
   /** implemented db */
   _list: TAccount[] = [];
 
-  getListByCocustomerId(id: string): TAccount {
+  async getByCocustomerId(id: string): Promise<TAccount> {
     return this._list.find((item) => item.id === id);
   }
 

@@ -1,11 +1,12 @@
-import React, { FC, PropsWithChildren } from 'react';
-import { Header } from '../../shared/header';
+import React, { FC } from 'react';
+import { Header } from '../../widgets/header';
+import { Outlet } from 'react-router';
 
-export const Layout: FC<PropsWithChildren> = ({ children }) => {
+export const Layout: FC = () => {
   return (
     <>
       <Header sticky={true} />
-      {children}
+      <Outlet />
     </>
   );
 };

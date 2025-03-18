@@ -4,8 +4,10 @@ import { Input } from '../../../shared/input';
 import { useController } from 'react-hook-form';
 import { FormProps } from '../types';
 import type { ProductFormData } from './type';
+import { useTranslation } from 'react-i18next';
 
 export const ImageField: FC<FormProps<ProductFormData>> = ({ control }) => {
+  const { t } = useTranslation();
   const { field, fieldState, formState } = useController({
     name: 'imgUrl',
     control,
@@ -20,20 +22,19 @@ export const ImageField: FC<FormProps<ProductFormData>> = ({ control }) => {
         }
 
         const isImage = /\.(png|jpg|jpeg|webp)$/i.test(val);
-        return val === ''
-          ? true
-          : !isUrl
-          ? 'Is not correct url'
-          : !isImage
-          ? 'Is not image (allowed png, jpg, jpeg, webp)'
-          : true;
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const errNotAllowedMessage = t('translation:isNotImage', { allowed: 'png, jpg, jpeg, webp' });
+
+        return val === '' ? true : !isUrl ? t('translation:isNotCorrectUrl') : !isImage ? errNotAllowedMessage : true;
       },
     },
   });
 
   return (
     <Input
-      label="Image URL"
+      label={t('translation:imageUrl')}
       value={field.value}
       error={fieldState.error?.message}
       disabled={formState.isSubmitting}

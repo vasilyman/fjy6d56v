@@ -5,7 +5,7 @@
   "main": "src/index.tsx",
   "author": "Igor <spirit-drive@yandex.ru>",
   "scripts": {
-    "start": "webpack serve --mode development",
+    "start": "webpack serve --mode development --no-open",
     "build": "webpack --mode production",
     "test": "jest src",
     "test-dev": "jest src --watch",
@@ -80,6 +80,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.54.2",
-    "react-i18next": "^15.4.0"
+    "react-i18next": "^15.4.0",
+    "react-router": "^7.3.0"
   }
 }

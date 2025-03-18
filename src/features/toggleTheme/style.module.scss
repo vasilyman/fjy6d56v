@@ -11,12 +11,16 @@
   position: relative;
   --toggle-color: var(--bg-contrast-2);
   --toggle-translate: 0px;
+  --icon-translate: 0px -50%;
+  --icon-color: black;
   cursor: pointer;
 
   // state
   &_active {
     --toggle-color: var(--bg-primary);
     --toggle-translate: calc(var(--h) * .725) 0px;
+    --icon-translate: calc(var(--h) * .725) -50%;
+    --icon-color: white;
   }
 
   &::after {
@@ -30,5 +34,15 @@
     border-radius: 999px;
     transition: translate .3s;
     translate: var(--toggle-translate);
+  }
+
+  &__icon {
+    position: absolute;
+    left: calc(var(--h) * .3125);
+    top: 50%;
+    transition: translate .3s;
+    translate: var(--icon-translate);
+    z-index: 1;
+    color: var(--icon-color);
   }
 }

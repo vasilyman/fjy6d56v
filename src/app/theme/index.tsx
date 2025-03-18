@@ -1,4 +1,4 @@
-import React, { createContext, FC, PropsWithChildren, useMemo, useState } from 'react';
+import React, { createContext, FC, PropsWithChildren, useEffect, useMemo, useRef, useState } from 'react';
 import $darkStyleModule from './dark.module.scss';
 import $lightStyleModule from './light.module.scss';
 
@@ -19,9 +19,19 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     [theme]
   );
 
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div className={themeClass.theme}>{children}</div>
-    </ThemeContext.Provider>
-  );
+  const appRef = useRef(document.querySelector('#root'));
+
+  useEffect(() => {
+    if (!appRef.current) throw new Error('theme provider cant find root element');
+
+    const el = appRef.current;
+
+    el.classList.toggle(themeClass.theme, true);
+
+    return () => {
+      el.classList.toggle(themeClass.theme, false);
+    };
+  }, [themeClass]);
+
+  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
 };

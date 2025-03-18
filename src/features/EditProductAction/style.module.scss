@@ -1,0 +1,10 @@
+.edit-product-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  
+  &__icon {
+    color: var(--bg-primary);
+  }
+}

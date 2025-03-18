@@ -1,0 +1,42 @@
+[
+  {
+    "id": "0",
+    "customer": {
+      "id": "0",
+      "type": 0
+    },
+    "basePriceTotal": 200,
+    "discount": 5,
+    "salePriceTotal": 185,
+    "orderPositions": [
+      {
+        "order": 0,
+        "product": {
+          "id": "0",
+          "type": 0,
+          "title": "Car 1",
+          "description": "Toyota Land Cruiser 300",
+          "sum": 800
+        },
+        "qty": 3,
+        "basePriceTotal": 20,
+        "discount": 2,
+        "salePriceTotal": 18
+      },
+      {
+        "order": 1,
+        "product": {
+          "id": "2",
+          "type": 0,
+          "title": "Car 2",
+          "description": "Toyota Land Cruiser Prado",
+          "sum": 800
+        },
+        "qty": 2,
+        "basePriceTotal": 20,
+        "discount": 2,
+        "salePriceTotal": 18
+      }
+    ]
+  }
+]

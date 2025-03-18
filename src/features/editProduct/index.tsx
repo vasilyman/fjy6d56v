@@ -5,6 +5,7 @@ import { ProductForm } from '../forms/productForm';
 import { Button } from '../../shared/button';
 import $style from './style.module.scss';
 import type { ProductFormData } from '../forms/productForm/type';
+import { useTranslation } from 'react-i18next';
 
 export const EditProduct: FC = () => {
   const {
@@ -30,10 +31,12 @@ export const EditProduct: FC = () => {
     console.log(res);
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className={$style['edit-product']}>
       <ProductForm control={control} />
-      <Button label="Сохранить" block disabled={isSubmitting} onClick={handleSubmit(onSubmit)} />
+      <Button label={t('translation:save')} block disabled={isSubmitting} onClick={handleSubmit(onSubmit)} />
     </div>
   );
 };
