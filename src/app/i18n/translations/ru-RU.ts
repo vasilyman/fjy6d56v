@@ -21,6 +21,8 @@ const ru = {
   isNotPositiveOrZero: 'должно быть 0 или больше',
   sum: 'сумма',
   productTitle: 'название',
+  cartPageTitle: 'ваша корзина',
+  cartEmpty: 'ваша корзина пуста',
 } as const;
 
 export default ru;

@@ -22,6 +22,7 @@ export const CartIcon: FC<Props> = ({ className }) => {
       className={cn($style['cart-icon'], className, colorClass)}
       color={theme === 'dark' ? 'black' : 'white'}
       icon="cart-shopping"
+      to="/cart"
     >
       {t('translation:cart')}
       <div className={$style['cart-icon__count']}>{count}</div>

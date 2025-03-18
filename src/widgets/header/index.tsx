@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
 import $style from './header.module.scss';
 import cn from 'clsx';
-import { Logo } from '../logo';
-import { Icon } from '../icon';
+import { Logo } from '../../shared/logo';
+import { Icon } from '../../shared/icon';
 import { ToggleTheme, SelectLang } from '../../features';
-import { useTranslation } from 'react-i18next';
 import { PersonIcon } from 'src/features/personIcon';
 import { CartIcon } from 'src/features/cart';
 import { Link } from 'react-router';
@@ -17,7 +16,6 @@ interface HeaderProps {
  * Primary UI component for user interaction
  */
 export const Header: FC<HeaderProps> = ({ children, sticky }) => {
-  const { t } = useTranslation();
   return (
     <header className={cn($style['header'], { [$style['header_sticky']]: sticky })}>
       <Link to="/" className={$style['header__logo']}>

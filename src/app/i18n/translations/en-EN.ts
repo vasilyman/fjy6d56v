@@ -21,6 +21,8 @@ const en = {
   isNotPositiveOrZero: 'This input must be positive or 0',
   sum: 'sum',
   productTitle: 'title',
+  cartPageTitle: 'Your cart',
+  cartEmpty: 'Your cart is empty',
 } as const;
 
 export default en;
