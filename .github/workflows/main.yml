@@ -42,7 +42,7 @@ jobs:
       - name: Deploy to Github Pages
         uses: JamesIves/github-pages-deploy-action@4.2.1
         with:
-          branch: main
+          branch: gh-pages
           folder: dist
 
       # # Собираем Storybook
