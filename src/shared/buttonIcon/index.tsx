@@ -4,8 +4,7 @@ import $style from './style.module.scss';
 import cn from 'clsx';
 import { Icon } from 'src/shared';
 import { TIcon } from '../icon';
-import { useHref, type Path } from 'react-router';
-import { VariableHTMLElement } from '../variableHTMLElement';
+import { Link, type Path } from 'react-router';
 
 type TButtonIconAccentColor = 'white' | 'black';
 
@@ -19,22 +18,23 @@ interface Props {
 }
 
 export const ButtonIcon: FC<Props> = ({ className, children, color, icon, to, onClick }) => {
-  const href = useHref(to);
-
-  const is = to ? 'a' : 'button';
-
-  return (
-    <VariableHTMLElement
-      is={is}
+  return to ? (
+    <Link className={cn($style['button-icon'], className, $style[`button-icon_color-${color}`])} type="button" to={to}>
+      <div className={$style['button-icon__icon']}>
+        <Icon name={icon} size="16" />
+      </div>
+      {children}
+    </Link>
+  ) : (
+    <button
       className={cn($style['button-icon'], className, $style[`button-icon_color-${color}`])}
       type="button"
-      href={href}
       onClick={onClick}
     >
       <div className={$style['button-icon__icon']}>
         <Icon name={icon} size="16" />
       </div>
       {children}
-    </VariableHTMLElement>
+    </button>
   );
 };
