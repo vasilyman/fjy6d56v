@@ -50,7 +50,7 @@ export const EditProductAction: FC<Props> = ({ className, id }) => {
         <Icon name="edit" className={$style['edit-product-button__icon']} />
       </button>
       <Modal visible={isShowed} onClose={close}>
-        <h2>{t('translation:editProductTitle')}</h2>
+        <h2>{`${t('translation:editProductTitle')} ${id}`}</h2>
         <EditProduct />
       </Modal>
     </>
