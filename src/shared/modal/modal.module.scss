@@ -9,6 +9,8 @@
 
   &__overlay {
     position: fixed;
+    top: 0px;
+    left: 0px;
     width: 100vw;
     height: 100vh;
     opacity: var(--overlay-opacity);
@@ -30,20 +32,28 @@
 
 .modal-close {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
-  width: 1.25rem;
-  height: 1.25rem;
+  box-sizing: border-box;
+  right: 0px;
+  top: 0px;
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
   border-radius: 999px;
   transition: background 1s;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
+  background: none;
+  border: none;
+
+  &:hover {
+    color: var(--text-error);
+  }
 }
 
 .modal-content {
-  padding: 1rem 3rem 1rem 1rem;
+  padding: 1rem 1rem 1rem 1rem;
   width: 100%;
   height: 100%;
 }

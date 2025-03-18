@@ -1,7 +1,26 @@
-export default {
-  translation: {
-    menu: 'menu',
-    lang: 'lang',
-    theme: 'theme',
-  },
-};
+const en = {
+  menu: 'menu',
+  lang: 'lang',
+  theme: 'theme',
+  cart: 'cart',
+  signin: 'sign-in',
+  ourProductsTitle: 'Our products',
+  profileTitle: 'Profile',
+  firstName: 'first name',
+  lastName: 'last name',
+  about: 'about',
+  thisIsRequired: 'this is required',
+  dontUseSpecialChars: 'dont use special chars',
+  thisInputExceedMaxLength: 'this input exceed maxLength {{ maxLength }}',
+  save: 'save',
+  editProductTitle: 'edit product',
+  descritption: 'description',
+  imageUrl: 'image url',
+  isNotCorrectUrl: 'is not correct url',
+  isNotImage: 'Is not image (allowed {{allowed}})',
+  isNotPositiveOrZero: 'This input must be positive or 0',
+  sum: 'sum',
+  productTitle: 'title',
+} as const;
+
+export default en;

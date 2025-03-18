@@ -1,10 +1,11 @@
 import type { FC } from 'react';
-import React from 'react';
+import React, { memo } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProfileForm } from '../forms/profileForm';
 import { Button } from '../../shared/button';
 import $style from './style.module.scss';
 import type { ProfileFormData } from '../forms/profileForm/type';
+import { useTranslation } from 'react-i18next';
 
 export const EditProfile: FC = () => {
   const {
@@ -28,10 +29,14 @@ export const EditProfile: FC = () => {
     console.log(res);
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className={$style['edit-profile']}>
       <ProfileForm control={control} />
-      <Button label="Сохранить" block disabled={isSubmitting} onClick={handleSubmit(onSubmit)} />
+      <Button label={t('translation:save')} block disabled={isSubmitting} onClick={handleSubmit(onSubmit)} />
     </div>
   );
 };
+
+export const EditProfileMemo = memo(EditProfile);

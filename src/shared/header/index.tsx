@@ -5,6 +5,9 @@ import { Logo } from '../logo';
 import { Icon } from '../icon';
 import { ToggleTheme, SelectLang } from '../../features';
 import { useTranslation } from 'react-i18next';
+import { PersonIcon } from 'src/features/personIcon';
+import { CartIcon } from 'src/features/cart';
+import { Link } from 'react-router';
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -17,13 +20,19 @@ export const Header: FC<HeaderProps> = ({ children, sticky }) => {
   const { t } = useTranslation();
   return (
     <header className={cn($style['header'], { [$style['header_sticky']]: sticky })}>
-      <Logo className={$style['header__logo']} />
-      <div className={cn($style['header__menu'], $style['menu'])}>
-        <Icon name="bars" className={$style['menu__icon']} />
+      <Link to="/" className={$style['header__logo']}>
+        <Logo />
+      </Link>
+      <div className={cn($style['header__menu'], $style['menu-button'])}>
+        <Icon name="bars" className={$style['menu-button__icon']} />
       </div>
       <div className={$style['header__content']}>{children}</div>
-      {t('lang')}: <SelectLang className={$style['header__select-lang']} />
-      {t('theme')}: <ToggleTheme className={$style['header__theme-toggler']} />
+      <SelectLang className={$style['header__select-lang']} />
+      <ToggleTheme className={$style['header__theme-toggler']} />
+      <div className={cn($style['header__site-menu'], $style['site-menu'])}>
+        <PersonIcon />
+        <CartIcon />
+      </div>
     </header>
   );
 };

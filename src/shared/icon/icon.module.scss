@@ -1,4 +1,14 @@
 .icon {
     box-sizing: border-box;
     display: inline-block;
+
+    &_color {
+        &-white {
+            color: white;
+        }
+
+        &-black {
+            color: black;
+        }
+    }
 }

@@ -7,18 +7,24 @@ import en from './translations/en-EN';
 // pass the i18n instance to react-i18next
 use(initReactI18next);
 
+export const resources = {
+  [ELang.RU]: {
+    translation: ru,
+  },
+  [ELang.EN]: {
+    translation: en,
+  },
+};
+
 // init i18next
 // for all options read: https://www.i18next.com/overview/configuration-options
 init({
-  resources: {
-    [ELang.RU]: ru,
-    [ELang.EN]: en,
-  },
+  resources,
   fallbackLng: ELang.RU,
   debug: true,
-  interpolation: {
-    escapeValue: false, // not needed for react as it escapes by default
-  },
+  // interpolation: {
+  //   escapeValue: false, // not needed for react as it escapes by default
+  // },
 } as InitOptions);
 
 export default i18n;
