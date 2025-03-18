@@ -28,6 +28,7 @@ export const EditProductAction: FC<Props> = ({ className, id }) => {
   };
 
   useEffect(() => {
+    if (id === undefined) return;
     if (searchParams.get(KEY) === id) setIsShowed(true);
   }, []);
 
