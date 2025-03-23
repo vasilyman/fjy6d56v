@@ -1,8 +1,9 @@
 .input-number {
-    --bg: #3B82F6;
+    --button-bg: #3B82F6;
     border-radius: 999px;
     display: inline-flex;
     max-width: 100%;
+    height: 2rem;
 
     &_block {
         width: 100%;
@@ -21,10 +22,10 @@
     &__button {
         border: none;
         outline: none;
-        background: var(--bg);
+        background: var(--button-bg);
         color: white;
-        border: 1px solid var(--bg);
-        height: calc(2rem + 2px);
+        border: 1px solid var(--button-bg);
+        height: 2rem;
         padding: 0px .5rem;
         cursor: pointer;
         flex: none;

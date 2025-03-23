@@ -3,6 +3,7 @@ import $style from './style.module.scss';
 import { Sheet } from '../../shared';
 import cn from 'clsx';
 import { AddToCard } from '../../features';
+import { EditProductAction } from 'src/features/EditProductAction';
 
 interface ProductCardProps {
   id: string;
@@ -13,9 +14,7 @@ interface ProductCardProps {
   loading?: boolean;
   className?: string;
 }
-/**
- * Primary UI component for user interaction
- */
+
 export const ProductCard: FC<ProductCardProps> = ({ sum, imgUrl, title, description, className, id, loading }) => {
   const sumFormatted = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(sum);
   const [count, setCount] = useState(0);
@@ -34,6 +33,7 @@ export const ProductCard: FC<ProductCardProps> = ({ sum, imgUrl, title, descript
         disabled={loading}
         onUpdateCount={setCount}
       />
+      <EditProductAction id={id} className={$style['product-card__edit-button']} />
     </Sheet>
   );
 };

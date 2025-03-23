@@ -77,6 +77,7 @@ module.exports = (_, args) => {
               options: {
                 modules: {
                   localIdentName: '[name]_[local]-[hash:base64:5]',
+                  auto: true,
                 },
               },
             },

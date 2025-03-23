@@ -1,0 +1,28 @@
+.cart-icon {
+  position: relative;
+  --icon-bg: var(--bg-primary);
+  --icon-color: white;
+
+  &_color {
+    &-white {
+    }
+    &-black {
+    }
+  }
+
+  &__count {
+    box-sizing: border-box;
+    position: absolute;
+    top: -.25rem;
+    right: -.25rem;
+    color: var(--icon-color);
+    background: var(--icon-bg);
+    font-size: .75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: .75rem;
+    overflow: hidden;
+    padding: .375rem;
+    text-overflow: ellipsis;
+  }
+}

@@ -8,6 +8,7 @@
     background: var(--bg);
 
     &__logo {
+        text-decoration: none;
         margin: .5rem 0px .5rem .5rem;
     }
 
@@ -20,20 +21,30 @@
     }
 
     &__theme-toggler {
-        margin-right: 1rem;
     }
 
     &_sticky {
         position: sticky;
         top: 0px;
+        z-index: 1;
     }
 
     &__select-lang {
     }
+
+    &__site-menu {
+        margin-right: 1rem;
+    }
 }
 
 // TODO move into component
-.menu {
+.site-menu {
+    display: flex;
+    gap: .5rem;
+}
+
+// TODO move into component
+.menu-button {
     --color: rgb(59, 130, 246);
     box-sizing: border-box;
     width: 2.5rem;

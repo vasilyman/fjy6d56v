@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { Header } from '../shared';
+import { Header } from 'src/widgets/header';
 
 const meta: Meta<typeof Header> = {
   title: 'Components/Header',

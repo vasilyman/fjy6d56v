@@ -73,13 +73,13 @@ export const Modal: FC<ModalProps> = ({ visible, children, onClose }) => {
   }, [visible, open, close]);
 
   return isShowedWrapper ? (
-    <AppPortal>
+    <AppPortal to="#root">
       <div ref={modalRef} className={cn($style['modal'])}>
         <div className={$style['modal__overlay']} />
         <div className={$style['modal__wrapper']}>
-          <div className={$style['modal-close']}>
-            <Icon name="xmark" onClick={onClose} />
-          </div>
+          <button className={$style['modal-close']} onClick={onClose}>
+            <Icon name="xmark" />
+          </button>
           <Sheet className={$style['modal-content']}>{children}</Sheet>
         </div>
       </div>
