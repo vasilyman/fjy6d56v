@@ -23,6 +23,8 @@ const ru = {
   productTitle: 'название',
   cartPageTitle: 'ваша корзина',
   cartEmpty: 'ваша корзина пуста',
+  signInTitle: 'вход',
+  logout: 'выход',
 } as const;
 
 export default ru;

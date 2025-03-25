@@ -12,9 +12,7 @@ const meta: Meta<typeof SignIn> = {
     ),
   ],
   component: SignIn,
-  args: {
-    count: 0,
-  },
+  args: {},
 };
 
 export default meta;

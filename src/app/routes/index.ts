@@ -29,5 +29,5 @@ export const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: '/fjy6d56v' }
+  { basename: process.env.REACT_APP_BASE_PATH }
 );

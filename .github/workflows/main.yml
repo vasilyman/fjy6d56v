@@ -36,6 +36,8 @@ jobs:
 
       # Собираем приложение
       - name: Build Application
+        env:
+          REACT_APP_BASE_PATH: /fjy6d56v
         run: npm run build
 
       # Публикуем приложение на Github Pages
