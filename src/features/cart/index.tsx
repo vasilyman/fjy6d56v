@@ -4,6 +4,8 @@ import cn from 'clsx';
 import { ThemeContext } from 'src/app/theme';
 import { ButtonIcon } from 'src/shared/buttonIcon';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { accountSelectors } from 'src/entities/account/store';
 
 interface Props {
   className?: string;
@@ -12,7 +14,7 @@ interface Props {
  * Primary UI component for user interaction
  */
 export const CartIcon: FC<Props> = ({ className }) => {
-  const count = 9;
+  const count = useSelector(accountSelectors.getTotalCount);
   const { theme } = useContext(ThemeContext);
   const { t } = useTranslation();
   const colorClass = theme === 'dark' ? $style['cart-icon_color-white'] : $style['cart-icon_color-black'];

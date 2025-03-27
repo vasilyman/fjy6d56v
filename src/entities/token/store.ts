@@ -79,9 +79,9 @@ export const { setAccessToken, fetchTokens, logout } = tokenSlice.actions;
 
 export const tokenSelectors = {
   getAccess: (state: AppState): AppState['token']['access'] => {
-    return state.token.access;
+    return state.token?.access;
   },
   getIsLoading: (state: AppState): AppState['token']['loading'] => {
-    return state.token.loading;
+    return state.token?.loading;
   },
 };

@@ -4,6 +4,7 @@ import cn from 'clsx';
 import { ProductCard, ProductCardMemoized } from '../productCard';
 import { InfiniteList } from '../../shared/infiniteList';
 import { Button } from '../../shared/button';
+import { EProductType } from 'src/entities/productType';
 
 type IProduct = {
   id: string;
@@ -12,6 +13,7 @@ type IProduct = {
   title: string;
   description: string;
   pending?: boolean;
+  type: EProductType;
 };
 
 interface ProductListProps {
@@ -29,6 +31,7 @@ const fetchItems = async (offset: number, limit: number): Promise<IProduct[]> =>
         imgUrl: '',
         title: `Product ${offset + i}`,
         description: 'Product description',
+        type: EProductType.TOY,
       })),
   ];
 
@@ -46,6 +49,7 @@ const getEmptyItem = (id: string): IProduct => ({
   title: '',
   description: '',
   pending: true,
+  type: EProductType.TOY,
 });
 
 const Fallback = () => <ProductCard {...getEmptyItem('0')} loading />;

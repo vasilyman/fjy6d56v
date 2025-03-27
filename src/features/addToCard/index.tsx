@@ -1,20 +1,33 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import cn from 'clsx';
 import $style from './style.module.scss';
 import { Button, NumberInput } from '../../shared';
+import { useSelector } from 'react-redux';
+import { accountSelectors, updateCountProduct } from 'src/entities/account/store';
+import { useAppDispatch } from 'src/app/store';
+import { TProduct } from 'src/entities/product';
 
 interface AddToCardProps {
   className?: string;
-  count: number;
-  onUpdateCount: (v: number) => void;
   block?: boolean;
   disabled?: boolean;
+  product: TProduct;
 }
 /**
  * Primary UI component for user interaction
  */
 
-export const AddToCard: FC<AddToCardProps> = ({ className, count, onUpdateCount, block, disabled }) => {
+export const AddToCard: FC<AddToCardProps> = ({ className, block, disabled, product }) => {
+  const orderPositions = useSelector(accountSelectors.getOrderPositions);
+  const count = useMemo(() => {
+    return orderPositions?.[product.id]?.qty ?? 0;
+  }, [orderPositions, product.id]);
+
+  const dispatch = useAppDispatch();
+  const onUpdateCount = (count: number) => {
+    return dispatch(updateCountProduct({ product, count }));
+  };
+
   const onAdd = () => {
     onUpdateCount(count + 1);
   };

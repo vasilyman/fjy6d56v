@@ -1,22 +1,32 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import $style from './style.module.scss';
 import cn from 'clsx';
 import { AddToCard } from '../../features';
 import { Sheet } from '../../shared';
+import { TProduct } from 'src/entities/product';
+import { EProductType } from 'src/entities/productType';
 
 interface ProductViewProps {
+  id: string;
   sum: number;
   imgUrl?: string;
   title: string;
   description: string;
-  type?: string;
+  type?: EProductType;
 }
 /**
  * Primary UI component for user interaction
  */
-export const ProductView: FC<ProductViewProps> = ({ sum, imgUrl, title, description, type }) => {
+export const ProductView: FC<ProductViewProps> = ({ id, sum, imgUrl, title, description, type }) => {
   const sumFormatted = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(sum);
-  const [count, setCount] = useState(0);
+  const product: TProduct = {
+    id,
+    type,
+    title,
+    sum,
+    description,
+    imgUrl,
+  };
   return (
     <>
       <section className={$style['product-view__row']}>
@@ -30,7 +40,7 @@ export const ProductView: FC<ProductViewProps> = ({ sum, imgUrl, title, descript
             <span className={$style['ellipsis']}>{sumFormatted}</span>
             <span>&nbsp;₽</span>
           </div>
-          <AddToCard className={cn($style['product-view__add-to-card'])} block count={count} onUpdateCount={setCount} />
+          <AddToCard className={cn($style['product-view__add-to-card'])} block product={product} />
         </Sheet>
       </section>
       <section className={$style['product-view__row']}>
