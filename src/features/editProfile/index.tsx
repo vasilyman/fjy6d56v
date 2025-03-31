@@ -1,33 +1,51 @@
 import type { FC } from 'react';
-import React, { memo } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProfileForm } from '../forms/profileForm';
 import { Button } from '../../shared/button';
 import $style from './style.module.scss';
 import type { ProfileFormData } from '../forms/profileForm/type';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { profileActions, profileSelectors } from 'src/entities/profile/store';
+import { useAppDispatch } from 'src/app/store';
 
 export const EditProfile: FC = () => {
+  const profile = useSelector(profileSelectors.getProfile);
+  const profileIsLoading = useSelector(profileSelectors.getIsLoading);
+
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    setValue,
   } = useForm<ProfileFormData>({
     defaultValues: {
-      nameField: 'initial value',
-      aboutField: 'initial value',
+      nameField: profile.firstname ?? '',
+      aboutField: profile.about ?? '',
     },
     mode: 'all',
   });
 
-  const onSubmit = async (data: ProfileFormData) => {
-    const res = await new Promise((res) => {
-      setTimeout(() => {
-        res(data);
-      }, 1000);
-    });
-    console.log(res);
-  };
+  useEffect(() => {
+    if (typeof profile.firstname === 'string' && !profileIsLoading) setValue('nameField', profile.firstname);
+    if (typeof profile.about === 'string' && !profileIsLoading) setValue('aboutField', profile.about);
+  }, [profile, setValue, profileIsLoading]);
+
+  const dispatch = useAppDispatch();
+
+  const onSubmit = useCallback(
+    async (data: ProfileFormData) => {
+      const res = await dispatch(
+        profileActions.updateProfile({
+          firstname: data.nameField,
+          about: data.aboutField,
+        })
+      );
+      console.log(data, res);
+    },
+    [dispatch]
+  );
 
   const { t } = useTranslation();
 

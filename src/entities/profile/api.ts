@@ -1,6 +1,7 @@
 import type { TProfile, TUpdateProfileDTO } from './type';
 import mock from './mock.json';
 
+/** only for emulating API */
 const DEMO_PROFILE_KEY = 'profile_key';
 
 class ProfileService {
@@ -20,14 +21,15 @@ class ProfileService {
     });
   }
 
-  updateProfile(newProfile: TUpdateProfileDTO): Promise<TProfile> {
+  updateProfile(data: TUpdateProfileDTO): Promise<TProfile> {
     return new Promise((res, rej) => {
       setTimeout(() => {
         let profile = mock as TProfile;
         try {
           profile = JSON.parse(localStorage.getItem(DEMO_PROFILE_KEY)) || profile;
-          localStorage.setItem(DEMO_PROFILE_KEY, JSON.stringify({ ...profile, ...newProfile }));
-          res(profile);
+          const newProfile = { ...profile, ...data };
+          localStorage.setItem(DEMO_PROFILE_KEY, JSON.stringify(newProfile));
+          res(newProfile);
         } catch (error) {
           rej(error);
         }
