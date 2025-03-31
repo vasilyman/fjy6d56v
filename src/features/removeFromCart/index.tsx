@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import cn from 'clsx';
 import $style from './style.module.scss';
 import { Icon } from '../../shared';
-import { deleteProduct } from 'src/entities/account/store';
+import { accountActions } from 'src/entities/account/store';
 import { useAppDispatch } from 'src/app/store';
 
 interface RemoveFromCartProps {
@@ -13,7 +13,7 @@ interface RemoveFromCartProps {
 export const RemoveFromCart: FC<RemoveFromCartProps> = ({ id, className }) => {
   const dispatch = useAppDispatch();
   const onDelete = () => {
-    return dispatch(deleteProduct(id));
+    return dispatch(accountActions.deleteProduct(id));
   };
 
   return (

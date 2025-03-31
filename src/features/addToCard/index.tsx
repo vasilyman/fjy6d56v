@@ -3,7 +3,7 @@ import cn from 'clsx';
 import $style from './style.module.scss';
 import { Button, NumberInput } from '../../shared';
 import { useSelector } from 'react-redux';
-import { accountSelectors, updateCountProduct } from 'src/entities/account/store';
+import { accountSelectors, accountActions } from 'src/entities/account/store';
 import { useAppDispatch } from 'src/app/store';
 import { TProduct } from 'src/entities/product';
 
@@ -25,7 +25,7 @@ export const AddToCard: FC<AddToCardProps> = ({ className, block, disabled, prod
 
   const dispatch = useAppDispatch();
   const onUpdateCount = (count: number) => {
-    return dispatch(updateCountProduct({ product, count }));
+    return dispatch(accountActions.updateCountProduct({ product, count }));
   };
 
   const onAdd = () => {

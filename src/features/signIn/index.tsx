@@ -5,7 +5,7 @@ import { LoginForm } from '../forms/loginForm';
 import { Button } from '../../shared/button';
 import $style from './style.module.scss';
 import type { LoginFormData } from '../forms/loginForm/type';
-import { fetchTokens } from 'src/entities/token/store';
+import { authActions } from 'src/entities/auth/store';
 import { useAppDispatch } from 'src/app/store';
 import { useTranslation } from 'react-i18next';
 
@@ -31,7 +31,7 @@ export const SignIn: FC<SignInProps> = ({ onSuccess }) => {
 
   const dispatch = useAppDispatch();
   const getTokens = (username: string, password: string) => {
-    return dispatch(fetchTokens({ username, password }));
+    return dispatch(authActions.fetchTokens({ username, password }));
   };
 
   const onLogin = async (username: string, password: string) => {

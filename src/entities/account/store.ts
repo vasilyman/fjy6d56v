@@ -122,15 +122,15 @@ declare module 'src/app/store/reducers' {
   export interface LazyLoadedSlices extends WithSlice<typeof accountSlice> {}
 }
 
-rootReducer.inject(accountSlice);
+const withAccount = rootReducer.inject(accountSlice);
 
-export const { updateCountProduct, fetchAccount, deleteProduct } = accountSlice.actions;
+export const accountActions = accountSlice.actions;
 
 export const accountSelectors = {
-  getOrderPositions: (state: AppState) => {
+  getOrderPositions: withAccount.selector((state: AppState) => {
     return state.account?.orderPositions;
-  },
-  getTotalCount: (state: AppState) => {
+  }),
+  getTotalCount: withAccount.selector((state: AppState) => {
     let totalCount = 0;
     const orderPositions = state.account?.orderPositions;
     if (!orderPositions) return totalCount;
@@ -139,5 +139,5 @@ export const accountSelectors = {
       totalCount += orderPositions[key].qty;
     });
     return totalCount;
-  },
+  }),
 };

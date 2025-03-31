@@ -1,6 +1,6 @@
 import type { GetTokensRequestDTO } from './type';
 
-class TokenService {
+class AuthService {
   getTokens({ username, password }: GetTokensRequestDTO): Promise<string> {
     return new Promise((res) => {
       console.log(`Wait token for ${username} ${password}`);
@@ -11,4 +11,4 @@ class TokenService {
   }
 }
 
-export default new TokenService();
+export default new AuthService();

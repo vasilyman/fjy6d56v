@@ -6,6 +6,9 @@ import { AddToCard } from '../../features';
 import { EditProductAction } from 'src/features/EditProductAction';
 import { TProduct } from 'src/entities/product';
 import type { EProductType } from 'src/entities/productType';
+import { authSelectors } from 'src/entities/auth/store';
+import { useSelector } from 'react-redux';
+import { EAuthPermissions } from 'src/entities/auth/const';
 
 interface ProductCardProps {
   id: string;
@@ -37,6 +40,7 @@ export const ProductCard: FC<ProductCardProps> = ({
     description,
     imgUrl,
   };
+  const permissions = useSelector(authSelectors.getPermissions);
   return (
     <Sheet id={id} className={cn($style['product-card'], { [$style['product-card_loading']]: loading }, className)}>
       <img className={cn($style['product-card__image'])} src={imgUrl} />
@@ -47,7 +51,9 @@ export const ProductCard: FC<ProductCardProps> = ({
       </div>
       <div className={cn($style['product-card__description'], $style['ellipsis'])}>{description}</div>
       <AddToCard className={cn($style['product-card__add-to-card'])} disabled={loading} product={product} />
-      <EditProductAction id={id} className={$style['product-card__edit-button']} />
+      {permissions.includes(EAuthPermissions.CAN_EDIT_PRODUCT) && (
+        <EditProductAction id={id} className={$style['product-card__edit-button']} />
+      )}
     </Sheet>
   );
 };
