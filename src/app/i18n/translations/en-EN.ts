@@ -23,6 +23,8 @@ const en = {
   productTitle: 'title',
   cartPageTitle: 'Your cart',
   cartEmpty: 'Your cart is empty',
+  signInTitle: 'sign in',
+  logout: 'logout',
 } as const;
 
 export default en;

@@ -1,38 +1,8 @@
 import uniqueId from 'lodash/uniqueId';
-import type { TCustomer } from '../customer';
 import { ECustomerType } from '../customerType';
-import type { TProduct } from '../product';
 import { EProductType } from '../productType';
 import mock from './mock.json';
-
-export type TOrderPositionRequest = {
-  order: number;
-  product: TProduct;
-  qty: number;
-};
-
-export type TOrderPosition = {
-  order: number;
-  product: TProduct;
-  qty: number;
-  basePriceTotal: number;
-  discount: number;
-  salePriceTotal: number;
-};
-
-export type TAccountRequest = {
-  customer: TCustomer;
-  orderPositions: TOrderPositionRequest[];
-};
-
-export type TAccount = {
-  id: string;
-  customer: TCustomer;
-  basePriceTotal: number;
-  discount: number;
-  salePriceTotal: number;
-  orderPositions: TOrderPosition[];
-};
+import { TAccount, TAccountRequest, TOrderPosition, TOrderPositionRequest } from './type';
 
 /** in percent */
 const discountMatrixPercent: Record<ECustomerType, Record<EProductType, number>> = {

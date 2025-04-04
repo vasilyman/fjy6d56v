@@ -5,8 +5,15 @@ import { LoginForm } from '../forms/loginForm';
 import { Button } from '../../shared/button';
 import $style from './style.module.scss';
 import type { LoginFormData } from '../forms/loginForm/type';
+import { authActions } from 'src/entities/auth/store';
+import { useAppDispatch } from 'src/app/store';
+import { useTranslation } from 'react-i18next';
 
-export const SignIn: FC = () => {
+type SignInProps = {
+  onSuccess?: () => void;
+};
+
+export const SignIn: FC<SignInProps> = ({ onSuccess }) => {
   const {
     control,
     handleSubmit,
@@ -20,19 +27,26 @@ export const SignIn: FC = () => {
     mode: 'all',
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    const res = await new Promise((res) => {
-      setTimeout(() => {
-        res(data);
-      }, 1000);
-    });
-    console.log(res);
+  const { t } = useTranslation();
 
+  const dispatch = useAppDispatch();
+  const getTokens = (username: string, password: string) => {
+    return dispatch(authActions.fetchTokens({ username, password }));
+  };
+
+  const onLogin = async (username: string, password: string) => {
+    return getTokens(username, password);
+  };
+
+  const onSubmit = async (data: LoginFormData) => {
+    await onLogin(data.email, data.password);
     reset();
+    if (onSuccess) onSuccess();
   };
 
   return (
     <div className={$style['sign-in']}>
+      <h3>{t('translation:signInTitle')}</h3>
       <LoginForm control={control} />
       <Button label="Войти" block disabled={isSubmitting} onClick={handleSubmit(onSubmit)} />
     </div>

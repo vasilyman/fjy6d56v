@@ -1,21 +1,33 @@
 import React, { FC } from 'react';
 import $style from './style.module.scss';
 import cn from 'clsx';
-import { Icon, NumberInput } from '../../shared';
+import { AddToCard } from 'src/features';
+import { EProductType } from 'src/entities/productType';
+import { TProduct } from 'src/entities/product';
+import { RemoveFromCart } from 'src/features/removeFromCart';
 
 export interface CartItemProps {
+  id: string;
   sum: number;
   imgUrl?: string;
   title: string;
-  qty: number;
   className?: string;
   description?: string;
-  onInput?: (v?: number) => void;
-  onDelete?: () => void;
+  type: EProductType;
 }
 
-export const CartItem: FC<CartItemProps> = ({ sum, imgUrl, title, qty, description, onInput, onDelete }) => {
+export const CartItem: FC<CartItemProps> = ({ sum, imgUrl, title, description, id, type }) => {
   const sumFormatted = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(sum);
+
+  const product: TProduct = {
+    id,
+    type,
+    title,
+    sum,
+    description,
+    imgUrl,
+  };
+
   return (
     <>
       <section className={$style['cart-item__row']}>
@@ -29,15 +41,8 @@ export const CartItem: FC<CartItemProps> = ({ sum, imgUrl, title, qty, descripti
             <span className={$style['ellipsis']}>{sumFormatted}</span>
             <span>&nbsp;₽</span>
           </div>
-          <NumberInput value={qty} onInput={onInput} min={1} />
-          <button
-            type="button"
-            title="Убрать из корзины"
-            className={cn($style['cart-item__remove'])}
-            onClick={onDelete}
-          >
-            <Icon name="trash" size="24" />
-          </button>
+          <AddToCard className={cn($style['cart-item__add-to-card'])} product={product} />
+          <RemoveFromCart id={id} />
         </div>
       </section>
     </>

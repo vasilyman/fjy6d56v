@@ -1,6 +1,7 @@
-import { accountService, TAccountRequest, type TOrderPositionRequest } from '.';
+import { accountService } from './api';
 import { ECustomerType } from '../customerType';
 import { EProductType } from '../productType';
+import type { TAccountRequest, TOrderPositionRequest } from './type';
 
 describe('account sevice', () => {
   const customerBase = {
