@@ -1,12 +1,10 @@
-import type { FC } from 'react';
 import React from 'react';
 import { Input } from '../../../shared/input';
-import { Controller } from 'react-hook-form';
+import { Controller, FieldValues } from 'react-hook-form';
 import { FormProps } from '../types';
-import type { ProfileFormData } from './type';
 import { useTranslation } from 'react-i18next';
 
-export const NameField: FC<FormProps<ProfileFormData>> = ({ control }) => {
+export const NameField = <T extends FieldValues>({ control, name }: FormProps<T>) => {
   const { t } = useTranslation();
   return (
     <Controller
@@ -34,7 +32,7 @@ export const NameField: FC<FormProps<ProfileFormData>> = ({ control }) => {
           onChange={onChange}
         />
       )}
-      name="nameField"
+      name={name}
     />
   );
 };

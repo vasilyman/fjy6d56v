@@ -24,6 +24,7 @@ const en = {
   cartPageTitle: 'Your cart',
   cartEmpty: 'Your cart is empty',
   signInTitle: 'sign in',
+  signUpTitle: 'sign up',
   logout: 'logout',
 } as const;
 

@@ -74,6 +74,7 @@
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@reduxjs/toolkit": "^2.6.1",
     "animejs": "^3.2.2",
+    "axios": "^1.8.4",
     "clsx": "^1.2.1",
     "dotenv-webpack": "^8.1.0",
     "fastdom": "^1.0.12",
@@ -83,6 +84,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.54.2",
     "react-i18next": "^15.4.0",
+    "react-query": "^3.39.3",
     "react-redux": "^9.2.0",
     "react-router": "^7.3.0"
   }

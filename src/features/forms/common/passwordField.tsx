@@ -1,19 +1,17 @@
-import type { FC } from 'react';
 import React from 'react';
 import { Input } from '../../../shared/input';
-import { useController } from 'react-hook-form';
 import { FormProps } from '../types';
-import type { LoginFormData } from './type';
+import { FieldValues, useController } from 'react-hook-form';
 
-export const EmailField: FC<FormProps<LoginFormData>> = ({ control }) => {
+export const PasswordField = <T extends FieldValues>({ control, name }: FormProps<T>) => {
   const { field, fieldState, formState } = useController({
-    name: 'email',
+    name,
     control,
     rules: {
       required: 'This is required',
-      pattern: {
-        value: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/i,
-        message: 'Email is invalid',
+      minLength: {
+        value: 6,
+        message: 'This input exceed minLength 6',
       },
       maxLength: {
         value: 100,
@@ -24,7 +22,8 @@ export const EmailField: FC<FormProps<LoginFormData>> = ({ control }) => {
 
   return (
     <Input
-      label="Email"
+      label="Password"
+      type="password"
       value={field.value}
       error={fieldState.error?.message}
       disabled={formState.isSubmitting}

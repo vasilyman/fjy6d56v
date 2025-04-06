@@ -12,7 +12,7 @@ const Component: FC = () => {
     mode: 'all',
   });
 
-  return <NameField control={control} />;
+  return <NameField control={control} name="nameField" />;
 };
 
 const meta: Meta<typeof NameField> = {

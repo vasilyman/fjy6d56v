@@ -4,6 +4,8 @@ import authService from './api';
 import { GetTokensRequestDTO } from './type';
 import { AppState } from 'src/app/store';
 import { EAuthPermissions, EAuthRoles } from './const';
+import { ServerErrors } from '../apiError/type';
+import { AxiosError } from 'axios';
 
 export interface AuthState {
   loading: boolean;
@@ -47,9 +49,11 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: (create) => ({
-    fetchTokens: create.asyncThunk(
-      async ({ username, password }: GetTokensRequestDTO): Promise<string> => {
-        const res = await authService.getTokens({ username, password });
+    fetchTokens: create.asyncThunk<string, GetTokensRequestDTO, { rejectValue: ServerErrors }>(
+      async ({ username, password }, { rejectWithValue }) => {
+        const res = await authService.getTokens({ username, password }).catch((err: AxiosError<ServerErrors>) => {
+          return rejectWithValue(err.response.data);
+        });
         return res as string | null;
       },
       {
@@ -89,6 +93,31 @@ const authSlice = createSlice({
           state.role = EAuthRoles.ANON;
           state.permissions = [];
           localStorage.removeItem(STORAGE_KEY_ACCESS_TOKEN);
+        },
+      }
+    ),
+    signup: create.asyncThunk<string, GetTokensRequestDTO, { rejectValue: ServerErrors }>(
+      async ({ username, password }, { rejectWithValue }) => {
+        const res = await authService.signUp({ email: username, password }).catch((err: AxiosError<ServerErrors>) => {
+          return rejectWithValue(err.response.data);
+        });
+        return res as string | null;
+      },
+      {
+        pending: (state) => {
+          state.loading = true;
+        },
+        rejected: (state) => {
+          state.loading = false;
+        },
+        fulfilled: (state, action) => {
+          state.loading = false;
+          state.access = action.payload;
+          state.isAuthenticated = true;
+          const { role, permissions } = parseJWT(action.payload);
+          state.role = role;
+          state.permissions = permissions;
+          localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, action.payload);
         },
       }
     ),

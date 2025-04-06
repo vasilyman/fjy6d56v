@@ -1,15 +1,13 @@
-import type { FC } from 'react';
 import React from 'react';
 import { Input } from '../../../shared/input';
-import { useController } from 'react-hook-form';
+import { FieldValues, useController } from 'react-hook-form';
 import { FormProps } from '../types';
-import type { ProductFormData } from './type';
 import { useTranslation } from 'react-i18next';
 
-export const SumField: FC<FormProps<ProductFormData>> = ({ control }) => {
+export const SumField = <T extends FieldValues>({ control, name }: FormProps<T>) => {
   const { t } = useTranslation();
   const { field, fieldState, formState } = useController({
-    name: 'sum',
+    name,
     control,
     rules: {
       required: t('translation:thisIsRequired'),
