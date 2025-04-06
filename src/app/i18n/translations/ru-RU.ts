@@ -24,6 +24,7 @@ const ru = {
   cartPageTitle: 'ваша корзина',
   cartEmpty: 'ваша корзина пуста',
   signInTitle: 'вход',
+  signUpTitle: 'регистрация',
   logout: 'выход',
 } as const;
 
