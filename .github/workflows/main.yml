@@ -39,7 +39,7 @@ jobs:
         env:
           REACT_APP_BASE_PATH: /fjy6d56v
           REACT_APP_COMMAND_ID: vasilyman
-          REACT_APP_API_BASE: http://19429ba06ff2.vps.myjino.ru/api
+          REACT_APP_API_BASE: https://19429ba06ff2.vps.myjino.ru/api
         run: npm run build
 
       # Публикуем приложение на Github Pages
