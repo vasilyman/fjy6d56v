@@ -1,16 +1,15 @@
-import type { FC } from 'react';
 import React from 'react';
-import { FormProps } from '../types';
 import { AboutField } from './aboutField';
 import { NameField } from './nameField';
 import $style from './style.module.scss';
 import type { ProfileFormData } from './type';
+import { ControlProps } from '../types';
 
-export const ProfileForm: FC<FormProps<ProfileFormData>> = ({ control }) => {
+export const ProfileForm = ({ control }: ControlProps<ProfileFormData>) => {
   return (
     <div className={$style['profile-form']}>
-      <NameField control={control} />
-      <AboutField control={control} />
+      <NameField control={control} name="nameField" />
+      <AboutField control={control} name="aboutField" />
     </div>
   );
 };
