@@ -3,9 +3,9 @@ import { EmailField } from '../common/emailField';
 import { PasswordField } from '../common/passwordField';
 import $style from './style.module.scss';
 import type { LoginFormData } from './type';
-import { Control } from 'react-hook-form';
+import { ControlProps } from '../types';
 
-export const LoginForm = ({ control }: { control: Control<LoginFormData> }) => {
+export const LoginForm = ({ control }: ControlProps<LoginFormData>) => {
   return (
     <div className={$style['login-form']}>
       <small>

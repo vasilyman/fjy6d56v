@@ -5,9 +5,9 @@ import { DescriptionField } from './descriptionField';
 import { SumField } from './sumField';
 import $style from './style.module.scss';
 import type { ProductFormData } from './type';
-import { Control } from 'react-hook-form';
+import { ControlProps } from '../types';
 
-export const ProductForm = ({ control }: { control: Control<ProductFormData> }) => {
+export const ProductForm = ({ control }: ControlProps<ProductFormData>) => {
   return (
     <div className={$style['product-form']}>
       <ImageField control={control} name="imgUrl" />
