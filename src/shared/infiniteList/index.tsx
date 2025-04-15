@@ -8,6 +8,7 @@ type InfiniteListProps<T extends InfiniteListItemRequiredProps & PropsWithChildr
   ItemComponent: React.ComponentType<T>;
   FallbackComponent?: React.ComponentType;
   onScrollEnd?: () => void;
+  onScreenFilled?: () => void;
 };
 
 const Fallback = () => {
@@ -21,6 +22,7 @@ export const InfiniteList = <T extends InfiniteListItemRequiredProps & PropsWith
   ItemComponent,
   FallbackComponent,
   onScrollEnd,
+  onScreenFilled,
 }: InfiniteListProps<T>) => {
   const endRef = useRef<HTMLDivElement>(null);
 
@@ -47,7 +49,32 @@ export const InfiniteList = <T extends InfiniteListItemRequiredProps & PropsWith
     return () => {
       observer.disconnect();
     };
-  }, [onScrollEnd, items]);
+  }, [onScrollEnd]);
+
+  useEffect(() => {
+    const options = {
+      rootMargin: '0px 0px 0px 0px',
+      threshold: 0,
+    };
+
+    const callback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === endRef.current) {
+          if (entry.isIntersecting) return;
+          if (onScreenFilled) onScreenFilled();
+          return;
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(callback, options);
+
+    observer.observe(endRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [onScreenFilled, items]);
 
   return (
     <>

@@ -13,7 +13,7 @@
         "order": 0,
         "product": {
           "id": "0",
-          "type": 0,
+          "type": "car",
           "title": "Car 1",
           "description": "Toyota Land Cruiser 300",
           "sum": 800
@@ -27,7 +27,7 @@
         "order": 1,
         "product": {
           "id": "2",
-          "type": 0,
+          "type": "car",
           "title": "Car 2",
           "description": "Toyota Land Cruiser Prado",
           "sum": 800
