@@ -3,9 +3,10 @@ import $style from './style.module.scss';
 import cn from 'clsx';
 import { CartItem } from '../cartItem';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { accountSelectors } from 'src/entities/account/store';
+import { useGetCartQuery } from 'src/entities/cart/store';
 import { EProductType } from 'src/entities/productType';
+import { gql, useQuery } from '@apollo/client';
+import { Query } from 'src/app/apollo/type';
 
 export type CartItem = {
   id: string;
@@ -21,23 +22,64 @@ interface CartListProps {
   className?: string;
 }
 
+const productFragmentList = gql`
+  query GetList($ids: [String!], $limit: Int) {
+    products {
+      getMany(input: { pagination: { pageSize: $limit }, ids: $ids }) {
+        data {
+          id
+          name
+          desc
+          photo
+          price
+        }
+        pagination {
+          pageSize
+          pageNumber
+          total
+        }
+      }
+    }
+  }
+`;
+
 export const CartList: FC<CartListProps> = ({ className }) => {
   const { t } = useTranslation();
 
-  const orderPositions = useSelector(accountSelectors.getOrderPositions);
-  const items = useMemo(() => {
-    if (!orderPositions) return [];
+  const { data: cart } = useGetCartQuery(null);
 
-    return Object.keys(orderPositions).map((key) => ({
-      id: orderPositions[key].product?.id,
-      sum: orderPositions[key].salePriceTotal,
-      qty: orderPositions[key].qty,
-      imgUrl: orderPositions[key].product?.imgUrl,
-      title: orderPositions[key].product?.title,
-      description: orderPositions[key].product.description,
-      type: orderPositions[key].product?.type,
-    }));
-  }, [orderPositions]);
+  const cartMap = useMemo(() => {
+    return Object.fromEntries(cart?.map((item) => [item.id, item]) ?? []);
+  }, [cart]);
+
+  const productIds = useMemo(() => {
+    return Object.keys(cartMap);
+  }, [cartMap]);
+
+  const { data: productItems, previousData: productItemsPrev } = useQuery<
+    Pick<Query, 'products'>,
+    { ids: string[]; limit: number }
+  >(productFragmentList, {
+    variables: {
+      ids: productIds,
+      limit: productIds.length,
+    },
+    skip: !productIds.length,
+  });
+
+  const items = useMemo(() => {
+    return cart?.length > 0
+      ? (productItems || productItemsPrev)?.products.getMany.data?.map((item) => ({
+          id: item.id,
+          sum: item.price,
+          qty: cartMap[item.id]?.qty,
+          imgUrl: item.photo,
+          title: item.name,
+          description: item.desc,
+          type: item.category?.name as EProductType,
+        })) ?? []
+      : [];
+  }, [cartMap, productItems, productItemsPrev, cart]);
 
   return (
     <section className={cn(className, $style['cart-list'])}>

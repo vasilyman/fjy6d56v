@@ -9,6 +9,7 @@ interface NumberInputProps {
   onInput?: (v: number) => void;
   max?: number;
   min?: number;
+  step?: number;
   block?: boolean;
   onlyInput?: boolean;
 }
@@ -17,15 +18,33 @@ interface NumberInputProps {
  * TODO: fix cursor position
  */
 
-export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value, max, min, block, onlyInput }) => {
+export const NumberInputRaw: FC<NumberInputProps> = ({
+  onInput,
+  className,
+  value,
+  max,
+  min,
+  step,
+  block,
+  onlyInput,
+}) => {
   const [localValue, setLocalValue] = useState(value);
 
   useLayoutEffect(() => {
     setLocalValue(value);
   }, [value]);
 
+  const numDigitsAfterDot = (n: number) => n.toString().split('.')[1]?.length ?? 0;
+  const normalizeToStep = (n: number) => +n.toFixed(numDigitsAfterDot(stepLocal.current));
+
   const onUserInput = useCallback(
-    (val: number) => {
+    (raw: number) => {
+      const m = 100;
+      const ost = normalizeToStep((normalizeToStep(raw * m) % normalizeToStep(stepLocal.current * m)) / m);
+      const norm = normalizeToStep(raw - ost);
+
+      const val = Math.min(Math.max(norm, minimum.current), maximum.current);
+
       if (val === value) return;
       onInput(val);
       setLocalValue(val);
@@ -36,6 +55,7 @@ export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value
   const { fieldStyleModule } = useContext(FieldContext);
   const maximum = useRef(Math.min(max ?? Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER));
   const minimum = useRef(min);
+  const stepLocal = useRef(step ?? 1);
 
   const onInputLocal: FormEventHandler<HTMLInputElement> = useCallback(
     (e) => {
@@ -48,13 +68,13 @@ export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value
   );
 
   const onAdd = useCallback(() => {
-    if (localValue + 1 > maximum.current) return;
-    onUserInput(localValue + 1);
+    if (localValue + stepLocal.current > maximum.current) return;
+    onUserInput(localValue + stepLocal.current);
   }, [onUserInput, localValue]);
 
   const onSub = useCallback(() => {
-    if (minimum.current !== undefined && localValue - 1 < minimum.current) return;
-    onUserInput(localValue - 1);
+    if (minimum.current !== undefined && localValue - stepLocal.current < minimum.current) return;
+    onUserInput(localValue - stepLocal.current);
   }, [onUserInput, localValue]);
 
   return (
@@ -76,6 +96,7 @@ export const NumberInputRaw: FC<NumberInputProps> = ({ onInput, className, value
         value={localValue}
         max={maximum.current}
         min={minimum.current}
+        step={stepLocal.current}
       />
       {!onlyInput && (
         <button
