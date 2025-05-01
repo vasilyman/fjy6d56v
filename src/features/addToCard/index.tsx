@@ -4,6 +4,7 @@ import $style from './style.module.scss';
 import { Button, NumberInput } from '../../shared';
 import { useAddProductToCartMutation, useGetCartQuery } from 'src/entities/cart/store';
 import { TProduct } from 'src/entities/product';
+import { useTranslation } from 'react-i18next';
 
 interface AddToCardProps {
   className?: string;
@@ -16,6 +17,7 @@ interface AddToCardProps {
  */
 
 export const AddToCard: FC<AddToCardProps> = ({ className, block, disabled, product }) => {
+  const { t } = useTranslation();
   const [addToCart] = useAddProductToCartMutation();
   const { data: cart } = useGetCartQuery(null);
 
@@ -34,7 +36,7 @@ export const AddToCard: FC<AddToCardProps> = ({ className, block, disabled, prod
   return (
     <div className={cn($style['add-to-card'], className, { [$style['add-to-card_block']]: block })}>
       {count === 0 ? (
-        <Button label="В корзину" disabled={disabled} block onClick={onAdd} />
+        <Button label={t('translation:addToCard')} disabled={disabled} block onClick={onAdd} />
       ) : (
         <NumberInput value={count} onInput={onUpdateCount} min={0} block />
       )}

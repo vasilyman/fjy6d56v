@@ -11,6 +11,7 @@ import { Query } from 'src/app/apollo/type';
 type IProduct = {
   id: string;
   sum: number;
+  sumBase?: number;
   imgUrl?: string;
   title: string;
   description: string;
@@ -33,6 +34,7 @@ const productFragmentList = gql`
           desc
           photo
           price
+          oldPrice
         }
         pagination {
           pageSize
@@ -47,6 +49,7 @@ const productFragmentList = gql`
 const getEmptyItem = (id: string): IProduct => ({
   id,
   sum: 0,
+  sumBase: 0,
   imgUrl: '',
   title: '',
   description: '',
@@ -89,6 +92,7 @@ export const ProductList: FC<ProductListProps> = ({ className, manualLoading }) 
           title: item.name,
           description: item.desc,
           sum: item.price,
+          sumBase: item.oldPrice,
           imgUrl: item.photo,
         }));
 

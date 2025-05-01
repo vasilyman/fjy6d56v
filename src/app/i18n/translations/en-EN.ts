@@ -26,6 +26,9 @@ const en = {
   signInTitle: 'sign in',
   signUpTitle: 'sign up',
   logout: 'logout',
+  addOrder: 'Order',
+  addToCard: 'Add to card',
+  cartTotal: 'Cart total',
 } as const;
 
 export default en;

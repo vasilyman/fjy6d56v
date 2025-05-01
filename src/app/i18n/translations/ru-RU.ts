@@ -26,6 +26,9 @@ const ru = {
   signInTitle: 'вход',
   signUpTitle: 'регистрация',
   logout: 'выход',
+  addOrder: 'Заказать',
+  addToCard: 'В корзину',
+  cartTotal: 'Итого',
 } as const;
 
 export default ru;
