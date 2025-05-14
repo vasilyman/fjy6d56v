@@ -34,6 +34,19 @@ export const router = createBrowserRouter(
             };
           },
         },
+        {
+          path: 'orders',
+          lazy: async () => {
+            const { OrdersPage: Component } = await import('src/pages/ordersPage');
+            return {
+              Component: () => (
+                <AuthNeeded>
+                  <Component />
+                </AuthNeeded>
+              ),
+            };
+          },
+        },
       ],
     },
   ],

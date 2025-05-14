@@ -7,6 +7,7 @@ import { ToggleTheme, SelectLang } from '../../features';
 import { PersonIcon } from 'src/features/personIcon';
 import { CartIcon } from 'src/features/cart';
 import { Link } from 'react-router';
+import { OrdersIcon } from 'src/features/ordersIcon';
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -30,6 +31,7 @@ export const Header: FC<HeaderProps> = ({ children, sticky }) => {
       <div className={cn($style['header__site-menu'], $style['site-menu'])}>
         <PersonIcon />
         <CartIcon />
+        <OrdersIcon />
       </div>
     </header>
   );

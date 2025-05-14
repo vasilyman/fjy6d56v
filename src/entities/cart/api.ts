@@ -46,6 +46,11 @@ class CartService {
     localStorage.setItem(CART_KEY, JSON.stringify(productIds.filter((item) => item !== null)));
     return Promise.resolve({ data: products });
   }
+
+  clearCart(): Promise<{ data: TCart[] }> {
+    localStorage.removeItem(CART_KEY);
+    return Promise.resolve({ data: [] });
+  }
 }
 
 export default new CartService();

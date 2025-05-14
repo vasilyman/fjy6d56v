@@ -22,10 +22,15 @@ export const cartSlice = createApi({
       queryFn: cartService.removeProductsFromCart,
       invalidatesTags: ['cart'],
     }),
+    clearCart: build.mutation({
+      queryFn: cartService.clearCart,
+      invalidatesTags: ['cart'],
+    }),
   }),
 });
 
-export const { useGetCartQuery, useAddProductToCartMutation, useRemoveProductFromCartMutation } = cartSlice;
+export const { useGetCartQuery, useAddProductToCartMutation, useRemoveProductFromCartMutation, useClearCartMutation } =
+  cartSlice;
 
 declare module 'src/app/store/reducers' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

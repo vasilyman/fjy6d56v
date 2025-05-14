@@ -29,6 +29,7 @@ const ru = {
   addOrder: 'Заказать',
   addToCard: 'В корзину',
   cartTotal: 'Итого',
+  orders: 'Заказы',
 } as const;
 
 export default ru;

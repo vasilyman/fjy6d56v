@@ -29,6 +29,7 @@ const en = {
   addOrder: 'Order',
   addToCard: 'Add to card',
   cartTotal: 'Cart total',
+  orders: 'Orders',
 } as const;
 
 export default en;
