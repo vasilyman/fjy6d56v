@@ -24,7 +24,7 @@ export const AboutField = <T extends FieldValues>({ control, name }: FormProps<T
       label={t('translation:about')}
       value={field.value}
       error={fieldState.error?.message}
-      disabled={formState.isSubmitting}
+      disabled
       onBlur={field.onBlur}
       onChange={field.onChange}
     />
