@@ -30,6 +30,8 @@ const ru = {
   addToCard: 'В корзину',
   cartTotal: 'Итого',
   orders: 'Заказы',
+  addProduct: 'Добавить товар',
+  category: 'Категория',
 } as const;
 
 export default ru;

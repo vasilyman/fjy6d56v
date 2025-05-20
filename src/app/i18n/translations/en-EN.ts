@@ -30,6 +30,8 @@ const en = {
   addToCard: 'Add to card',
   cartTotal: 'Cart total',
   orders: 'Orders',
+  addProduct: 'Add product',
+  category: 'Category',
 } as const;
 
 export default en;

@@ -8,6 +8,7 @@ import { PersonIcon } from 'src/features/personIcon';
 import { CartIcon } from 'src/features/cart';
 import { Link } from 'react-router';
 import { OrdersIcon } from 'src/features/ordersIcon';
+import { AddProductIcon } from 'src/features/addProductIcon';
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -32,6 +33,7 @@ export const Header: FC<HeaderProps> = ({ children, sticky }) => {
         <PersonIcon />
         <CartIcon />
         <OrdersIcon />
+        <AddProductIcon />
       </div>
     </header>
   );

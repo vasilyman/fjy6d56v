@@ -47,6 +47,19 @@ export const router = createBrowserRouter(
             };
           },
         },
+        {
+          path: 'add-product',
+          lazy: async () => {
+            const { AddProductPage: Component } = await import('src/pages/addProductPage');
+            return {
+              Component: () => (
+                <AuthNeeded>
+                  <Component />
+                </AuthNeeded>
+              ),
+            };
+          },
+        },
       ],
     },
   ],

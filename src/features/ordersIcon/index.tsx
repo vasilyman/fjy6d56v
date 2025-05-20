@@ -32,6 +32,7 @@ export const OrdersIcon: FC<Props> = ({ className }) => {
   const isAuthenticated = useSelector(authSelectors.isAuthenticated);
 
   const { data: ordersTotal, loading: ordersTotalIsLoading } = useQuery<Pick<Query, 'orders'>>(ordersTotalGet, {
+    skip: !accessToken,
     context: {
       headers: {
         authorization: `Bearer ${accessToken}`,
@@ -40,7 +41,7 @@ export const OrdersIcon: FC<Props> = ({ className }) => {
   });
 
   const total = useMemo<number>(() => {
-    return ordersTotal?.orders.getMany.pagination.total;
+    return ordersTotal?.orders.getMany.pagination.total ?? 0;
   }, [ordersTotal]);
 
   const to = useMemo<string | undefined>(() => {
@@ -48,10 +49,10 @@ export const OrdersIcon: FC<Props> = ({ className }) => {
   }, [isAuthenticated]);
 
   return (
-    <>
+    isAuthenticated && (
       <ButtonIcon className={cn(className)} color={theme === 'dark' ? 'black' : 'white'} icon="list" to={to}>
         {ordersTotalIsLoading ? 'loading...' : `${t('translation:orders')} (${total})`}
       </ButtonIcon>
-    </>
+    )
   );
 };

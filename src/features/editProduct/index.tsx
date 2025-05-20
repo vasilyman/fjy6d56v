@@ -14,9 +14,9 @@ export const EditProduct: FC = () => {
     formState: { isSubmitting },
   } = useForm<ProductFormData>({
     defaultValues: {
-      imgUrl: '#',
-      title: 'initial value',
-      description: 'initial value',
+      imgUrl: '',
+      title: '',
+      description: '',
       sum: 0,
     },
     mode: 'all',

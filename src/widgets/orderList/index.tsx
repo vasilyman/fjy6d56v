@@ -29,6 +29,7 @@ export const OrderList = () => {
   const accessToken = useSelector(authSelectors.getAccess);
 
   const { data: ordersRaw } = useQuery<Pick<Query, 'orders'>>(orderListGet, {
+    skip: !accessToken,
     context: {
       headers: {
         authorization: `Bearer ${accessToken}`,

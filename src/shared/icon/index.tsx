@@ -4,7 +4,17 @@ import $style from './icon.module.scss';
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 import '@fortawesome/fontawesome-free/scss/solid.scss';
 
-export type TIcon = 'xmark' | 'bars' | 'moon' | 'lightbulb' | 'cart-shopping' | 'user' | 'edit' | 'trash' | 'list';
+export type TIcon =
+  | 'xmark'
+  | 'bars'
+  | 'moon'
+  | 'lightbulb'
+  | 'cart-shopping'
+  | 'user'
+  | 'edit'
+  | 'trash'
+  | 'list'
+  | 'plus';
 export type TIconSize = '16' | '24' | '32';
 
 interface IconProps {
