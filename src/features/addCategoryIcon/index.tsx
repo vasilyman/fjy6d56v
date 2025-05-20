@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export const AddProductIcon: FC<Props> = ({ className }) => {
+export const AddCategoryIcon: FC<Props> = ({ className }) => {
   const { theme } = useContext(ThemeContext);
   const { t } = useTranslation();
 
@@ -22,9 +22,9 @@ export const AddProductIcon: FC<Props> = ({ className }) => {
         className={cn(className)}
         color={theme === 'dark' ? 'black' : 'white'}
         icon="plus"
-        to="/admin/add-product"
+        to="/admin/add-category"
       >
-        {t('translation:addProduct')}
+        {t('translation:addCategory')}
       </ButtonIcon>
     )
   );

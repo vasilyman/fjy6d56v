@@ -1,7 +1,15 @@
 import React, { FC, useContext } from 'react';
-import $style from './style.module.scss';
 import cn from 'clsx';
-import { ErrorProps, Field, FieldContext, LabelElement, LabelProps, MessageProps } from '../field';
+import {
+  ErrorElement,
+  ErrorProps,
+  Field,
+  FieldContext,
+  LabelElement,
+  LabelProps,
+  MessageProps,
+  MessagesElement,
+} from '../field';
 
 type SelectItem = {
   title: string;
@@ -49,7 +57,9 @@ const SelectElement: FC<SelectElementProps> = ({
       className={cn(fieldStyleModule['field__input'], className, error && fieldStyleModule['field__input_error'])}
       onChange={(e) => onChange && onChange(e.target.value)}
       onBlur={(e) => onBlur && onBlur(e.nativeEvent)}
+      defaultValue=""
     >
+      <option value="" disabled />
       {items.map((item) => (
         <option key={item.value} value={item.value}>
           {item.title}
@@ -70,23 +80,23 @@ export const Select: FC<SelectProps> = ({
   disabled,
   value,
   onBlur,
+  messages,
 }) => {
   return (
     <Field>
       {label && <LabelElement label={label} />}
-      <div className={cn(className, $style['select'])}>
-        <SelectElement
-          name={name}
-          id={id}
-          items={items}
-          error={!!error}
-          className={className}
-          onChange={onChange}
-          disabled={disabled}
-          value={value}
-          onBlur={onBlur}
-        />
-      </div>
+      <SelectElement
+        name={name}
+        id={id}
+        items={items}
+        error={!!error}
+        className={className}
+        onChange={onChange}
+        disabled={disabled}
+        value={value}
+        onBlur={onBlur}
+      />
+      {error ? <ErrorElement error={error} /> : <MessagesElement messages={messages} />}
     </Field>
   );
 };

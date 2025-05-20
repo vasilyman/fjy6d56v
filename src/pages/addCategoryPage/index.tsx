@@ -4,12 +4,12 @@ import { AddProduct } from 'src/features/addProduct';
 import { Container } from 'src/shared/container';
 import { firstUppercase } from 'src/shared/lib/firstUppercase';
 
-export const AddProductPage = () => {
+export const AddCategoryPage = () => {
   const { t } = useTranslation();
   return (
     <>
       <Container>
-        <h1>{firstUppercase(t('translation:addProduct'))}</h1>
+        <h1>{firstUppercase(t('translation:addCategory'))}</h1>
       </Container>
       <Container>
         <AddProduct />

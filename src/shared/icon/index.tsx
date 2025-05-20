@@ -14,7 +14,8 @@ export type TIcon =
   | 'edit'
   | 'trash'
   | 'list'
-  | 'plus';
+  | 'plus'
+  | 'user-tie';
 export type TIconSize = '16' | '24' | '32';
 
 interface IconProps {

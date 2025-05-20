@@ -60,8 +60,9 @@ export const CategoryField = <T extends FieldValues>({ control, name }: FormProp
       disabled={formState.isSubmitting || categoriesIsLoading}
       loading={categoriesIsLoading}
       items={categoriesOptions}
+      value={field.value}
       onBlur={field.onBlur}
-      onChange={(v: string) => field.onChange(Number(v))}
+      onChange={field.onChange}
     />
   );
 };

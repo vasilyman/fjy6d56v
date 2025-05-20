@@ -31,7 +31,10 @@ const en = {
   cartTotal: 'Cart total',
   orders: 'Orders',
   addProduct: 'Add product',
+  addCategory: 'Add category',
+  editCategory: 'Edit category',
   category: 'Category',
+  adminSectionTitle: 'Admin section',
 } as const;
 
 export default en;

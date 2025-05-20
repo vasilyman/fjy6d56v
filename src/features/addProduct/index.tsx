@@ -1,15 +1,15 @@
 import type { FC } from 'react';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ProductForm } from '../forms/productForm';
 import { Button } from '../../shared/button';
 import $style from './style.module.scss';
 import type { ProductFormData } from '../forms/productForm/type';
 import { useTranslation } from 'react-i18next';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { useSelector } from 'react-redux';
 import { authSelectors } from 'src/entities/auth/store';
-import { Mutation, ProductAddInput, Query } from 'src/app/apollo/type';
+import { Mutation, ProductAddInput } from 'src/app/apollo/type';
 
 const productAddMutation = gql`
   mutation Add($input: ProductAddInput!) {
@@ -60,7 +60,7 @@ export const AddProduct: FC = () => {
     return productAdd({
       variables: {
         input: {
-          categoryId: '',
+          categoryId: data.categoryId,
           desc: data.description,
           name: data.title,
           photo: data.imgUrl,

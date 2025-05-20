@@ -12,7 +12,7 @@ export const TitleField = <T extends FieldValues>({ control, name }: FormProps<T
     rules: {
       required: t('translation:thisIsRequired'),
       pattern: {
-        value: /^[\w\s-]*$/i,
+        value: /^[\W\w\s-.]*$/i,
         message: t('translation:dontUseSpecialChars'),
       },
       maxLength: {

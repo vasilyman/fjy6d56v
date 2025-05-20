@@ -8,18 +8,19 @@ import { PersonIcon } from 'src/features/personIcon';
 import { CartIcon } from 'src/features/cart';
 import { Link } from 'react-router';
 import { OrdersIcon } from 'src/features/ordersIcon';
-import { AddProductIcon } from 'src/features/addProductIcon';
+import { AdminIcon } from 'src/features/adminIcon';
 
 interface HeaderProps {
   children?: React.ReactNode;
   sticky?: boolean;
+  style?: React.CSSProperties;
 }
 /**
  * Primary UI component for user interaction
  */
-export const Header: FC<HeaderProps> = ({ children, sticky }) => {
+export const Header: FC<HeaderProps> = ({ children, sticky, style }) => {
   return (
-    <header className={cn($style['header'], { [$style['header_sticky']]: sticky })}>
+    <header style={style} className={cn($style['header'], { [$style['header_sticky']]: sticky })}>
       <Link to="/" className={$style['header__logo']}>
         <Logo />
       </Link>
@@ -33,7 +34,7 @@ export const Header: FC<HeaderProps> = ({ children, sticky }) => {
         <PersonIcon />
         <CartIcon />
         <OrdersIcon />
-        <AddProductIcon />
+        <AdminIcon />
       </div>
     </header>
   );

@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export const AddProductIcon: FC<Props> = ({ className }) => {
+export const AdminIcon: FC<Props> = ({ className }) => {
   const { theme } = useContext(ThemeContext);
   const { t } = useTranslation();
 
@@ -18,13 +18,8 @@ export const AddProductIcon: FC<Props> = ({ className }) => {
 
   return (
     isAuthenticated && (
-      <ButtonIcon
-        className={cn(className)}
-        color={theme === 'dark' ? 'black' : 'white'}
-        icon="plus"
-        to="/admin/add-product"
-      >
-        {t('translation:addProduct')}
+      <ButtonIcon className={cn(className)} color={theme === 'dark' ? 'black' : 'white'} icon="user-tie" to="/admin">
+        {t('translation:adminSectionTitle')}
       </ButtonIcon>
     )
   );

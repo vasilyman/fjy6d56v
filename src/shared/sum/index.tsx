@@ -22,5 +22,5 @@ export const Sum: FC<Props> = ({ sum, sumBase, className }) => {
       </div>
       <span>&nbsp;₽</span>
     </div>
-  )
+  );
 };

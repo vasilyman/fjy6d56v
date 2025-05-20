@@ -31,7 +31,10 @@ const ru = {
   cartTotal: 'Итого',
   orders: 'Заказы',
   addProduct: 'Добавить товар',
+  addCategory: 'Добавить категорию',
+  editCategory: 'Редактировать категорию',
   category: 'Категория',
+  adminSectionTitle: 'Админка',
 } as const;
 
 export default ru;

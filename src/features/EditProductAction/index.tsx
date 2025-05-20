@@ -51,7 +51,7 @@ export const EditProductAction: FC<Props> = ({ className, id }) => {
       </button>
       <Modal visible={isShowed} onClose={close}>
         <h2>{`${t('translation:editProductTitle')} ${id}`}</h2>
-        <EditProduct />
+        <EditProduct productId={id} />
       </Modal>
     </>
   );
