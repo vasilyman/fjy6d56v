@@ -1,0 +1,1 @@
+{"version":3,"file":"css/550.css","mappings":"AAAA,iCACE,aACA,sBACA,S","sources":["webpack:///./features/addProduct/style.module.scss"],"sourcesContent":[".edit-product {\n  display: flex;\n  flex-direction: column;\n  gap: 1rem;\n}"],"names":[],"sourceRoot":""}
