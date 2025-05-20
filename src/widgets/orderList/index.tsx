@@ -42,7 +42,7 @@ export const OrderList = () => {
   }, [ordersRaw]);
   return (
     <ul>
-      {orders.map((order, i) => (
+      {orders.map((order) => (
         <li key={order.id}>
           <div>Статус: {order.status}</div>
           <div>Позиций: {order.products.length}</div>
