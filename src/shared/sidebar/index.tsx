@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import $style from './style.module.scss';
 
 type Props = {
   style?: React.CSSProperties;
@@ -6,5 +7,9 @@ type Props = {
 };
 
 export const Sidebar: FC<Props> = ({ style, children }) => {
-  return <aside style={style}>{children}</aside>;
+  return (
+    <aside style={style} className={$style['sidebar']}>
+      {children}
+    </aside>
+  );
 };

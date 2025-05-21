@@ -29,14 +29,14 @@
     }
 
     &__title {
-        color: #475569;
+        color: var(--text);
         font-size: 1.25rem;
         line-height: 1.75rem;
         flex: 1;
     }
 
     &__description {
-        color: #475569;
+        color: var(--text-light);
         font-size: .75rem;
         line-height: 1rem;
         flex: 1;
@@ -51,7 +51,7 @@
     }
 
     &__sum {
-        color: #1E293B;
+        color: var(--text);
         font-size: 2.25rem;
         line-height: 2.75rem;
         font-weight: 600;

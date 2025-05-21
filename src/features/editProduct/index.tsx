@@ -99,6 +99,11 @@ export const EditProduct: FC<{ productId: string }> = ({ productId }) => {
           authorization: `Bearer ${accessToken}`,
         },
       },
+      // TODO remove after backend will support subscriotpions
+      update(cache) {
+        cache.evict({ fieldName: 'products' });
+        cache.gc();
+      },
     }
   );
 

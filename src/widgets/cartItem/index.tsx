@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import $style from './style.module.scss';
 import cn from 'clsx';
 import { AddToCard } from 'src/features';
-import { EProductType } from 'src/entities/productType';
 import { TProduct } from 'src/entities/product';
 import { RemoveFromCart } from 'src/features/removeFromCart';
+import { Tcategory } from 'src/entities/category/type';
 
 export interface CartItemProps {
   id: string;
@@ -13,15 +13,15 @@ export interface CartItemProps {
   title: string;
   className?: string;
   description?: string;
-  type: EProductType;
+  category: Tcategory;
 }
 
-export const CartItem: FC<CartItemProps> = ({ sum, imgUrl, title, description, id, type }) => {
+export const CartItem: FC<CartItemProps> = ({ sum, imgUrl, title, description, id, category }) => {
   const sumFormatted = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(sum);
 
   const product: TProduct = {
     id,
-    type,
+    category,
     title,
     sum,
     description,

@@ -1,0 +1,9 @@
+.layout {
+  display: grid;
+  grid-template:
+    "header header" auto
+    "aside main" 1fr
+    / 16rem 1fr;
+
+  min-height: 100vh;
+}

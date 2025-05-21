@@ -4,7 +4,7 @@ import { FieldValues, useController } from 'react-hook-form';
 import { FormProps } from '../types';
 import { useTranslation } from 'react-i18next';
 
-export const TitleField = <T extends FieldValues>({ control, name }: FormProps<T>) => {
+export const TitleField = <T extends FieldValues>({ control, name, label }: FormProps<T>) => {
   const { t } = useTranslation();
   const { field, fieldState, formState } = useController({
     name,
@@ -26,7 +26,7 @@ export const TitleField = <T extends FieldValues>({ control, name }: FormProps<T
 
   return (
     <Input
-      label={t('translation:productTitle')}
+      label={label ?? 'Title'}
       value={field.value}
       error={fieldState.error?.message}
       disabled={formState.isSubmitting}

@@ -1,7 +1,6 @@
 import type { Meta } from '@storybook/react';
 import { ProductView } from '../widgets';
 import React from 'react';
-import { EProductType } from 'src/entities/productType';
 
 const meta: Meta<typeof ProductView> = {
   title: 'Widgets/ProductView',
@@ -17,7 +16,10 @@ const meta: Meta<typeof ProductView> = {
     sum: 200,
     imgUrl: 'https://placehold.jp/150x150.png',
     title: 'Title',
-    type: EProductType.CAR,
+    category: {
+      id: 'cat_id',
+      name: 'Category name',
+    },
     description: `Description long very very long. Description long very very long. Description long very very long. Description long very very long. Description long very very long. Description long very very long. 
     Description long very very long. Description long very very long. Description long very very long. `,
   },

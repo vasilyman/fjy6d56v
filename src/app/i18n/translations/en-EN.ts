@@ -34,7 +34,10 @@ const en = {
   addCategory: 'Add category',
   editCategory: 'Edit category',
   category: 'Category',
+  categories: 'Categories',
   adminSectionTitle: 'Admin section',
+  categoryTitle: 'Category name',
+  orderNo: 'Order #',
 } as const;
 
 export default en;

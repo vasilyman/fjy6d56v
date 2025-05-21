@@ -4,9 +4,9 @@ import cn from 'clsx';
 import { ProductCard, ProductCardMemoized } from '../productCard';
 import { InfiniteList } from '../../shared/infiniteList';
 import { Button } from '../../shared/button';
-import { EProductType } from 'src/entities/productType';
 import { gql, useQuery } from '@apollo/client';
 import { Query } from 'src/app/apollo/type';
+import { Tcategory } from 'src/entities/category/type';
 
 type IProduct = {
   id: string;
@@ -16,7 +16,7 @@ type IProduct = {
   title: string;
   description: string;
   pending?: boolean;
-  type: EProductType;
+  category: Tcategory;
 };
 
 interface ProductListProps {
@@ -35,6 +35,11 @@ const productFragmentList = gql`
           photo
           price
           oldPrice
+          category {
+            id
+            name
+            photo
+          }
         }
         pagination {
           pageSize
@@ -54,7 +59,10 @@ const getEmptyItem = (id: string): IProduct => ({
   title: '',
   description: '',
   pending: true,
-  type: EProductType.TOY,
+  category: {
+    id: '',
+    name: '',
+  },
 });
 
 const Fallback = () => <ProductCard {...getEmptyItem('0')} loading />;
@@ -88,7 +96,7 @@ export const ProductList: FC<ProductListProps> = ({ className, manualLoading }) 
       .then((res) => {
         const productsToAdd: IProduct[] = res.data.products.getMany.data.map((item) => ({
           id: item.id,
-          type: item.category?.name as EProductType,
+          category: item.category,
           title: item.name,
           description: item.desc,
           sum: item.price,

@@ -1,8 +1,8 @@
-import type { EProductType } from '../productType';
+import { Tcategory } from '../category/type';
 
 export type TProduct = {
   id: string;
-  type: EProductType;
+  category: Tcategory;
   title: string;
   description?: string;
   imgUrl?: string;

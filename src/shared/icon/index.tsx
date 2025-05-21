@@ -15,7 +15,8 @@ export type TIcon =
   | 'trash'
   | 'list'
   | 'plus'
-  | 'user-tie';
+  | 'user-tie'
+  | 'spinner';
 export type TIconSize = '16' | '24' | '32';
 
 interface IconProps {
