@@ -59,6 +59,8 @@ export const OrderItem: FC<Props> = ({ order: { id, status, products }, isLoadin
           status: status as EOrderStatus,
         },
       },
+    }).catch((e) => {
+      console.log(e);
     });
   };
 
