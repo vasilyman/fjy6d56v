@@ -22,7 +22,7 @@
 
     &__title {
         min-height: 1.75rem;
-        color: var(--color, #475569);
+        color: var(--color);
         background: var(--bg);
         font-size: 1.25rem;
         line-height: 1.75rem;
@@ -30,9 +30,19 @@
         padding-right: 1.25rem;
     }
 
+    &__category {
+        min-height: .75rem;
+        color: var(--color);
+        background: var(--bg);
+        font-size: .75rem;
+        line-height: .75rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
     &__description {
         min-height: 1rem;
-        color: var(--color, #1D4ED8);
+        color: var(--color);
         background: var(--bg);
         font-size: .875rem;
         line-height: 1rem;

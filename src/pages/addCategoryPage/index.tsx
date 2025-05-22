@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AddProduct } from 'src/features/addProduct';
+import { AddCategory } from 'src/features/addCategory';
 import { Container } from 'src/shared/container';
 import { firstUppercase } from 'src/shared/lib/firstUppercase';
 
@@ -12,7 +12,7 @@ export const AddCategoryPage = () => {
         <h1>{firstUppercase(t('translation:addCategory'))}</h1>
       </Container>
       <Container>
-        <AddProduct />
+        <AddCategory />
       </Container>
     </>
   );

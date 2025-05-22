@@ -5,7 +5,7 @@
 
   padding: 1rem;
   border-radius: 1rem;
-  box-shadow: 0px 0px 10px #0000001f;
+  box-shadow: var(--shadow);
 
   &__empty {
     text-align: center;

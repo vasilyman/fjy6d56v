@@ -4,7 +4,7 @@ import cn from 'clsx';
 import { AddToCard } from '../../features';
 import { Sheet } from '../../shared';
 import { TProduct } from 'src/entities/product';
-import { EProductType } from 'src/entities/productType';
+import { Tcategory } from 'src/entities/category/type';
 
 interface ProductViewProps {
   id: string;
@@ -12,16 +12,16 @@ interface ProductViewProps {
   imgUrl?: string;
   title: string;
   description: string;
-  type?: EProductType;
+  category?: Tcategory;
 }
 /**
  * Primary UI component for user interaction
  */
-export const ProductView: FC<ProductViewProps> = ({ id, sum, imgUrl, title, description, type }) => {
+export const ProductView: FC<ProductViewProps> = ({ id, sum, imgUrl, title, description, category }) => {
   const sumFormatted = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(sum);
   const product: TProduct = {
     id,
-    type,
+    category,
     title,
     sum,
     description,
@@ -33,7 +33,7 @@ export const ProductView: FC<ProductViewProps> = ({ id, sum, imgUrl, title, desc
         <img className={cn($style['product-view__image'])} src={imgUrl} />
         <div className={cn($style['product-view__info'])}>
           <div className={cn($style['product-view__title'])}>{title}</div>
-          <div className={cn($style['product-view__type'])}>{type}</div>
+          <div className={cn($style['product-view__type'])}>{category.name}</div>
         </div>
         <Sheet className={$style['product-view__action']}>
           <div className={$style['product-view__sum']} title={sumFormatted}>

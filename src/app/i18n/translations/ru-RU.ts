@@ -34,7 +34,10 @@ const ru = {
   addCategory: 'Добавить категорию',
   editCategory: 'Редактировать категорию',
   category: 'Категория',
+  categories: 'Категории',
   adminSectionTitle: 'Админка',
+  categoryTitle: 'Название категории',
+  orderNo: 'Заказ №',
 } as const;
 
 export default ru;

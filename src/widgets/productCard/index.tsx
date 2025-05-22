@@ -5,11 +5,11 @@ import cn from 'clsx';
 import { AddToCard } from '../../features';
 import { EditProductAction } from 'src/features/EditProductAction';
 import { TProduct } from 'src/entities/product';
-import type { EProductType } from 'src/entities/productType';
 import { authSelectors } from 'src/entities/auth/store';
 import { useSelector } from 'react-redux';
 import { EAuthPermissions } from 'src/entities/auth/const';
 import { Sum } from 'src/shared/sum';
+import { Tcategory } from 'src/entities/category/type';
 
 interface ProductCardProps {
   id: string;
@@ -20,7 +20,7 @@ interface ProductCardProps {
   description: string;
   loading?: boolean;
   className?: string;
-  type: EProductType;
+  category: Tcategory;
 }
 
 export const ProductCard: FC<ProductCardProps> = ({
@@ -32,11 +32,11 @@ export const ProductCard: FC<ProductCardProps> = ({
   className,
   id,
   loading,
-  type,
+  category,
 }) => {
   const product: TProduct = {
     id,
-    type,
+    category,
     title,
     sum,
     sumBase,
@@ -48,6 +48,7 @@ export const ProductCard: FC<ProductCardProps> = ({
     <Sheet id={id} className={cn($style['product-card'], { [$style['product-card_loading']]: loading }, className)}>
       <img className={cn($style['product-card__image'])} src={imgUrl} />
       <div className={cn($style['product-card__title'], $style['ellipsis'])}>{title}</div>
+      {category && <div className={cn($style['product-card__category'], $style['ellipsis'])}>{category.name}</div>}
       <Sum sum={sum} sumBase={sumBase} />
       <div className={cn($style['product-card__description'], $style['ellipsis'])}>{description}</div>
       <AddToCard className={cn($style['product-card__add-to-card'])} disabled={loading} product={product} />

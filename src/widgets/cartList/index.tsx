@@ -4,9 +4,9 @@ import cn from 'clsx';
 import { CartItem } from '../cartItem';
 import { useTranslation } from 'react-i18next';
 import { useGetCartQuery } from 'src/entities/cart/store';
-import { EProductType } from 'src/entities/productType';
 import { gql, useQuery } from '@apollo/client';
 import { Query } from 'src/app/apollo/type';
+import { Tcategory } from 'src/entities/category/type';
 
 export type CartItem = {
   id: string;
@@ -15,7 +15,7 @@ export type CartItem = {
   imgUrl?: string;
   title: string;
   description?: string;
-  type: EProductType;
+  category: Tcategory;
 };
 
 interface CartListProps {
@@ -76,7 +76,7 @@ export const CartList: FC<CartListProps> = ({ className }) => {
           imgUrl: item.photo,
           title: item.name,
           description: item.desc,
-          type: item.category?.name as EProductType,
+          category: item.category,
         })) ?? []
       : [];
   }, [cartMap, productItems, productItemsPrev, cart]);

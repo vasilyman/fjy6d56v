@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
-import { AddProduct } from 'src/features/addProduct';
+import { EditCategory } from 'src/features/editCategory';
 import { Container } from 'src/shared/container';
 import { firstUppercase } from 'src/shared/lib/firstUppercase';
 
@@ -16,7 +16,7 @@ export const EditCategoryPage = () => {
         </h1>
       </Container>
       <Container>
-        <AddProduct />
+        <EditCategory categoryId={categoryId} />
       </Container>
     </>
   );
