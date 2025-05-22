@@ -5,10 +5,13 @@ import { ProductCard, ProductCardMemoized } from '../productCard';
 import { InfiniteList } from '../../shared/infiniteList';
 import { Button } from '../../shared/button';
 import { EProductType } from 'src/entities/productType';
+import { gql, useQuery } from '@apollo/client';
+import { Query } from 'src/app/apollo/type';
 
 type IProduct = {
   id: string;
   sum: number;
+  sumBase?: number;
   imgUrl?: string;
   title: string;
   description: string;
@@ -21,30 +24,32 @@ interface ProductListProps {
   manualLoading?: boolean;
 }
 
-const fetchItems = async (offset: number, limit: number): Promise<IProduct[]> => {
-  const products: IProduct[] = [
-    ...Array(limit)
-      .fill(0)
-      .map((_, i) => ({
-        id: `${offset + i}`,
-        sum: 200,
-        imgUrl: '',
-        title: `Product ${offset + i}`,
-        description: 'Product description',
-        type: EProductType.TOY,
-      })),
-  ];
-
-  return new Promise((res) => {
-    setTimeout(() => {
-      res(products);
-    }, 1000);
-  });
-};
+const productFragmentList = gql`
+  query GetList($page: Int, $limit: Int) {
+    products {
+      getMany(input: { pagination: { pageNumber: $page, pageSize: $limit } }) {
+        data {
+          id
+          name
+          desc
+          photo
+          price
+          oldPrice
+        }
+        pagination {
+          pageSize
+          pageNumber
+          total
+        }
+      }
+    }
+  }
+`;
 
 const getEmptyItem = (id: string): IProduct => ({
   id,
   sum: 0,
+  sumBase: 0,
   imgUrl: '',
   title: '',
   description: '',
@@ -61,48 +66,65 @@ export const ProductList: FC<ProductListProps> = ({ className, manualLoading }) 
 
   const [pending, setPending] = useState(false);
 
-  const LIMIT = 8;
+  const [isScreenFilled, setIsScreenFilled] = useState(false);
 
-  const count = useRef(products.size);
+  const totalPages = useRef(1);
+
+  const LIMIT = 4;
+
+  const [page, setPage] = useState(1);
+
+  const { refetch: fetchItems } = useQuery<Pick<Query, 'products'>, { page: number; limit: number }>(
+    productFragmentList,
+    {
+      skip: true,
+    }
+  );
 
   const loadProducts = useCallback(() => {
     setPending(true);
-    const productsToAdd = Array(LIMIT)
-      .fill(0)
-      .map((_, i) => getEmptyItem(`${count.current + i}`));
 
-    fetchItems(count.current, LIMIT)
-      .then((productsToAdd) => {
+    fetchItems({ page, limit: LIMIT })
+      .then((res) => {
+        const productsToAdd: IProduct[] = res.data.products.getMany.data.map((item) => ({
+          id: item.id,
+          type: item.category?.name as EProductType,
+          title: item.name,
+          description: item.desc,
+          sum: item.price,
+          sumBase: item.oldPrice,
+          imgUrl: item.photo,
+        }));
+
         setProducts((products) => {
           for (const product of productsToAdd) {
             products.set(product.id, product);
           }
           return new Map(products);
         });
+
+        totalPages.current = Math.ceil(res.data.products.getMany.pagination.total / LIMIT);
       })
       .finally(() => {
         setPending(false);
       });
-
-    setProducts((products) => {
-      for (const product of productsToAdd) {
-        products.set(product.id, product);
-      }
-      return new Map(products);
-    });
-
-    count.current += LIMIT;
-  }, []);
+  }, [fetchItems, page]);
 
   const onScrollEnd = useCallback(() => {
     if (manualLoading) return;
 
-    loadProducts();
-  }, [loadProducts, manualLoading]);
+    setPage((page) => (page < totalPages.current ? page + 1 : page));
+  }, [manualLoading]);
 
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
+
+  useEffect(() => {
+    if (!isScreenFilled) {
+      setPage((page) => (page < totalPages.current ? page + 1 : page));
+    }
+  }, [isScreenFilled, products]);
 
   return (
     <>
@@ -112,6 +134,7 @@ export const ProductList: FC<ProductListProps> = ({ className, manualLoading }) 
           ItemComponent={ProductCardMemoized}
           FallbackComponent={FallbackMemoized}
           onScrollEnd={onScrollEnd}
+          onScreenFilled={() => setIsScreenFilled(true)}
         />
       </div>
       {manualLoading ? (
@@ -119,7 +142,7 @@ export const ProductList: FC<ProductListProps> = ({ className, manualLoading }) 
           label="Загрузить еще"
           className={$style['product-list-more-button']}
           disabled={pending}
-          onClick={loadProducts}
+          onClick={() => setPage((page) => page + 1)}
         />
       ) : null}
     </>

@@ -1,5 +1,5 @@
 export enum EProductType {
-  CAR,
-  TOY,
-  FOOD,
+  CAR = 'car',
+  TOY = 'toy',
+  FOOD = 'food',
 }

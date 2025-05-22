@@ -1,6 +1,15 @@
 import React, { ChangeEvent, FC, useContext } from 'react';
 import cn from 'clsx';
-import { Field, FieldContext } from '../field';
+import {
+  ErrorElement,
+  ErrorProps,
+  Field,
+  FieldContext,
+  LabelElement,
+  LabelProps,
+  MessageProps,
+  MessagesElement,
+} from '../field';
 type InputElement = {
   id?: string;
   className?: string;
@@ -14,11 +23,7 @@ type InputElement = {
   onBlur?: (e: FocusEvent) => void;
 };
 
-type Input = Omit<InputElement, 'error'> & {
-  error?: string;
-  messages?: string[];
-  label?: string;
-};
+type Input = Omit<InputElement, 'error'> & ErrorProps & LabelProps & MessageProps;
 
 const InputElement: FC<InputElement> = ({
   id,
@@ -47,22 +52,6 @@ const InputElement: FC<InputElement> = ({
       onBlur={(e) => onBlur && onBlur(e.nativeEvent)}
     />
   );
-};
-
-const MessagesElement: FC<Pick<Input, 'messages'>> = ({ messages }) => {
-  return <>{messages?.length > 0 && messages.map((message, i) => <p key={i}>{message}</p>)}</>;
-};
-
-const ErrorElement: FC<Pick<Input, 'error'>> = ({ error }) => {
-  const { fieldStyleModule } = useContext(FieldContext);
-
-  return !!error && <p className={fieldStyleModule['field__error']}>{error}</p>;
-};
-
-const LabelElement: FC<Pick<Input, 'label'>> = ({ label }) => {
-  const { fieldStyleModule } = useContext(FieldContext);
-
-  return !!label && <label className={fieldStyleModule['field__label']}>{label}</label>;
 };
 
 /**

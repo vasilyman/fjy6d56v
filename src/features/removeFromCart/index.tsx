@@ -1,9 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import cn from 'clsx';
 import $style from './style.module.scss';
 import { Icon } from '../../shared';
-import { accountActions } from 'src/entities/account/store';
-import { useAppDispatch } from 'src/app/store';
+import { useGetCartQuery, useRemoveProductFromCartMutation } from 'src/entities/cart/store';
 
 interface RemoveFromCartProps {
   id: string;
@@ -11,9 +10,15 @@ interface RemoveFromCartProps {
 }
 
 export const RemoveFromCart: FC<RemoveFromCartProps> = ({ id, className }) => {
-  const dispatch = useAppDispatch();
+  const [removeProduct] = useRemoveProductFromCartMutation();
+  const { data: cart } = useGetCartQuery(null);
+
+  const qty = useMemo(() => {
+    return cart?.find((item) => item.id === id)?.qty ?? 0;
+  }, [cart, id]);
+
   const onDelete = () => {
-    return dispatch(accountActions.deleteProduct(id));
+    return removeProduct([{ id, qty }]);
   };
 
   return (

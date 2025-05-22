@@ -13,7 +13,7 @@ const meta: Meta<typeof EditProduct> = {
   ],
   component: EditProduct,
   args: {
-    count: 0,
+    productId: '0',
   },
 };
 

@@ -2,10 +2,9 @@ import React, { FC, useMemo } from 'react';
 import cn from 'clsx';
 import $style from './style.module.scss';
 import { Button, NumberInput } from '../../shared';
-import { useSelector } from 'react-redux';
-import { accountSelectors, accountActions } from 'src/entities/account/store';
-import { useAppDispatch } from 'src/app/store';
+import { useAddProductToCartMutation, useGetCartQuery } from 'src/entities/cart/store';
 import { TProduct } from 'src/entities/product';
+import { useTranslation } from 'react-i18next';
 
 interface AddToCardProps {
   className?: string;
@@ -18,14 +17,17 @@ interface AddToCardProps {
  */
 
 export const AddToCard: FC<AddToCardProps> = ({ className, block, disabled, product }) => {
-  const orderPositions = useSelector(accountSelectors.getOrderPositions);
-  const count = useMemo(() => {
-    return orderPositions?.[product.id]?.qty ?? 0;
-  }, [orderPositions, product.id]);
+  const { t } = useTranslation();
+  const [addToCart] = useAddProductToCartMutation();
+  const { data: cart } = useGetCartQuery(null);
 
-  const dispatch = useAppDispatch();
-  const onUpdateCount = (count: number) => {
-    return dispatch(accountActions.updateCountProduct({ product, count }));
+  const count = useMemo(() => {
+    return cart?.find((item) => item.id === product.id)?.qty ?? 0;
+  }, [cart, product.id]);
+
+  const onUpdateCount = (newCount: number) => {
+    const qty = newCount - count;
+    addToCart([{ id: product.id, qty }]);
   };
 
   const onAdd = () => {
@@ -34,7 +36,7 @@ export const AddToCard: FC<AddToCardProps> = ({ className, block, disabled, prod
   return (
     <div className={cn($style['add-to-card'], className, { [$style['add-to-card_block']]: block })}>
       {count === 0 ? (
-        <Button label="В корзину" disabled={disabled} block onClick={onAdd} />
+        <Button label={t('translation:addToCard')} disabled={disabled} block onClick={onAdd} />
       ) : (
         <NumberInput value={count} onInput={onUpdateCount} min={0} block />
       )}

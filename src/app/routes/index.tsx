@@ -3,6 +3,7 @@ import { IndexPage } from 'src/pages/indexPage';
 import { Layout } from '../layout';
 import { AuthNeeded } from './authNeeded';
 import React from 'react';
+import { adminRoutes } from './admin';
 
 export const router = createBrowserRouter(
   [
@@ -11,7 +12,7 @@ export const router = createBrowserRouter(
       Component: Layout,
       children: [
         {
-          path: '/',
+          path: '',
           Component: IndexPage,
         },
         {
@@ -34,8 +35,22 @@ export const router = createBrowserRouter(
             };
           },
         },
+        {
+          path: 'orders',
+          lazy: async () => {
+            const { OrdersPage: Component } = await import('src/pages/ordersPage');
+            return {
+              Component: () => (
+                <AuthNeeded>
+                  <Component />
+                </AuthNeeded>
+              ),
+            };
+          },
+        },
       ],
     },
+    ...adminRoutes,
   ],
   { basename: process.env.REACT_APP_BASE_PATH }
 );

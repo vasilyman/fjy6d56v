@@ -5,7 +5,6 @@ import { GetTokensRequestDTO } from './type';
 import { AppState } from 'src/app/store';
 import { EAuthPermissions, EAuthRoles } from './const';
 import { ServerErrors } from '../apiError/type';
-import { AxiosError } from 'axios';
 
 export interface AuthState {
   loading: boolean;
@@ -23,7 +22,7 @@ const parseJWT = (token: string): Pick<AuthState, 'role' | 'permissions'> => {
       role: EAuthRoles.ANON,
       permissions: [],
     };
-  const isAdmin = token.includes('admin');
+  const isAdmin = true; // token.includes('admin');
   return {
     role: isAdmin ? EAuthRoles.ADMIN : EAuthRoles.CUSTOMER,
     permissions: isAdmin ? [EAuthPermissions.CAN_EDIT_PRODUCT] : [],
@@ -51,8 +50,8 @@ const authSlice = createSlice({
   reducers: (create) => ({
     fetchTokens: create.asyncThunk<string, GetTokensRequestDTO, { rejectValue: ServerErrors }>(
       async ({ username, password }, { rejectWithValue }) => {
-        const res = await authService.getTokens({ username, password }).catch((err: AxiosError<ServerErrors>) => {
-          return rejectWithValue(err.response.data);
+        const res = await authService.getTokens({ username, password }).catch((err: ServerErrors) => {
+          return rejectWithValue(err);
         });
         return res as string | null;
       },
@@ -98,8 +97,8 @@ const authSlice = createSlice({
     ),
     signup: create.asyncThunk<string, GetTokensRequestDTO, { rejectValue: ServerErrors }>(
       async ({ username, password }, { rejectWithValue }) => {
-        const res = await authService.signUp({ email: username, password }).catch((err: AxiosError<ServerErrors>) => {
-          return rejectWithValue(err.response.data);
+        const res = await authService.signUp({ email: username, password }).catch((err: ServerErrors) => {
+          return rejectWithValue(err);
         });
         return res as string | null;
       },

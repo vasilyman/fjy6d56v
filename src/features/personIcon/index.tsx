@@ -7,12 +7,21 @@ import { useSelector } from 'react-redux';
 import { authSelectors } from 'src/entities/auth/store';
 import { Modal } from 'src/shared';
 import { SignIn } from '../signIn';
-import { profileActions, profileSelectors } from 'src/entities/profile/store';
-import { useAppDispatch } from 'src/app/store';
+import { gql, useQuery } from '@apollo/client';
+import { Query } from 'src/app/apollo/type';
 
 interface Props {
   className?: string;
 }
+
+const profileNameGet = gql`
+  query Profile {
+    profile {
+      name
+      email
+    }
+  }
+`;
 
 export const PersonIcon: FC<Props> = ({ className }) => {
   const { theme } = useContext(ThemeContext);
@@ -20,20 +29,31 @@ export const PersonIcon: FC<Props> = ({ className }) => {
 
   const accessToken = useSelector(authSelectors.getAccess);
   const isAuthenticated = useSelector(authSelectors.isAuthenticated);
-  const userName = useSelector(profileSelectors.getName);
-  const profileIsLoading = useSelector(profileSelectors.getIsLoading);
+
+  const {
+    data: profile,
+    loading: profileIsLoading,
+    refetch: fetchMe,
+  } = useQuery<Pick<Query, 'profile'>, { ids: string[]; limit: number }>(profileNameGet, {
+    skip: !accessToken,
+    context: {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    },
+  });
+
+  const userName = useMemo<string>(() => profile?.profile.name || profile?.profile.email, [profile]);
 
   const btnText = useMemo<string>(
     () => (isAuthenticated ? userName : t('translation:signin')),
     [isAuthenticated, t, userName]
   );
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     if (!accessToken) return;
-    dispatch(profileActions.fetchMe());
-  }, [accessToken, dispatch]);
+    fetchMe();
+  }, [accessToken, fetchMe]);
 
   const to = useMemo<string | undefined>(() => {
     return isAuthenticated ? '/me' : undefined;

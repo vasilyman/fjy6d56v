@@ -12,7 +12,8 @@
     "lint": "eslint src --fix",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "deploy": "npx gh-pages -d dist -e site"
+    "deploy": "npx gh-pages -d dist -e site",
+    "gettypes": "graphql-codegen --config ./src/app/apollo/Codegen.yml"
   },
   "license": "MIT",
   "devDependencies": {
@@ -20,6 +21,10 @@
     "@babel/preset-env": "^7.22.4",
     "@babel/preset-react": "^7.22.3",
     "@babel/preset-typescript": "^7.21.5",
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@storybook/addon-essentials": "^7.6.17",
     "@storybook/addon-interactions": "^7.6.17",
     "@storybook/addon-links": "^7.6.17",
@@ -71,6 +76,7 @@
     "webpack-dev-server": "^4.15.0"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.7",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@reduxjs/toolkit": "^2.6.1",
     "animejs": "^3.2.2",
@@ -78,6 +84,7 @@
     "clsx": "^1.2.1",
     "dotenv-webpack": "^8.1.0",
     "fastdom": "^1.0.12",
+    "graphql": "^16.10.0",
     "i18next": "^24.2.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",

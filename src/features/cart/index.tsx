@@ -1,11 +1,10 @@
-import React, { FC, useContext } from 'react';
+import React, { FC, useContext, useMemo } from 'react';
 import $style from './style.module.scss';
 import cn from 'clsx';
 import { ThemeContext } from 'src/app/theme';
 import { ButtonIcon } from 'src/shared/buttonIcon';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { accountSelectors } from 'src/entities/account/store';
+import { useGetCartQuery } from 'src/entities/cart/store';
 
 interface Props {
   className?: string;
@@ -14,7 +13,16 @@ interface Props {
  * Primary UI component for user interaction
  */
 export const CartIcon: FC<Props> = ({ className }) => {
-  const count = useSelector(accountSelectors.getTotalCount);
+  const { data: cart } = useGetCartQuery(null);
+  const count = useMemo(() => {
+    return (
+      cart?.reduce((acc, cur) => {
+        acc += cur.qty;
+        return acc;
+      }, 0) ?? 0
+    );
+  }, [cart]);
+
   const { theme } = useContext(ThemeContext);
   const { t } = useTranslation();
   const colorClass = theme === 'dark' ? $style['cart-icon_color-white'] : $style['cart-icon_color-black'];

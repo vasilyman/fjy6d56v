@@ -7,4 +7,5 @@ export type TProduct = {
   description?: string;
   imgUrl?: string;
   sum: number;
+  sumBase?: number;
 };

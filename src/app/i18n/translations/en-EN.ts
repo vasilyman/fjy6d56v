@@ -26,6 +26,15 @@ const en = {
   signInTitle: 'sign in',
   signUpTitle: 'sign up',
   logout: 'logout',
+  addOrder: 'Order',
+  addToCard: 'Add to card',
+  cartTotal: 'Cart total',
+  orders: 'Orders',
+  addProduct: 'Add product',
+  addCategory: 'Add category',
+  editCategory: 'Edit category',
+  category: 'Category',
+  adminSectionTitle: 'Admin section',
 } as const;
 
 export default en;

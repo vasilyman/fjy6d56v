@@ -3,4 +3,5 @@ export type ProductFormData = {
   imgUrl?: string;
   title: string;
   description: string;
+  categoryId: string;
 };

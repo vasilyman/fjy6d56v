@@ -9,10 +9,12 @@ import type { EProductType } from 'src/entities/productType';
 import { authSelectors } from 'src/entities/auth/store';
 import { useSelector } from 'react-redux';
 import { EAuthPermissions } from 'src/entities/auth/const';
+import { Sum } from 'src/shared/sum';
 
 interface ProductCardProps {
   id: string;
   sum: number;
+  sumBase?: number;
   imgUrl?: string;
   title: string;
   description: string;
@@ -23,6 +25,7 @@ interface ProductCardProps {
 
 export const ProductCard: FC<ProductCardProps> = ({
   sum,
+  sumBase,
   imgUrl,
   title,
   description,
@@ -31,12 +34,12 @@ export const ProductCard: FC<ProductCardProps> = ({
   loading,
   type,
 }) => {
-  const sumFormatted = new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(sum);
   const product: TProduct = {
     id,
     type,
     title,
     sum,
+    sumBase,
     description,
     imgUrl,
   };
@@ -45,10 +48,7 @@ export const ProductCard: FC<ProductCardProps> = ({
     <Sheet id={id} className={cn($style['product-card'], { [$style['product-card_loading']]: loading }, className)}>
       <img className={cn($style['product-card__image'])} src={imgUrl} />
       <div className={cn($style['product-card__title'], $style['ellipsis'])}>{title}</div>
-      <div className={$style['product-card__sum']} title={sumFormatted}>
-        <span className={$style['ellipsis']}>{sumFormatted}</span>
-        <span>&nbsp;₽</span>
-      </div>
+      <Sum sum={sum} sumBase={sumBase} />
       <div className={cn($style['product-card__description'], $style['ellipsis'])}>{description}</div>
       <AddToCard className={cn($style['product-card__add-to-card'])} disabled={loading} product={product} />
       {permissions.includes(EAuthPermissions.CAN_EDIT_PRODUCT) && (

@@ -1,0 +1,6 @@
+overwrite: true
+schema: "https://cea3c11a3f62.vps.myjino.ru/graphql"
+generates:
+  src/app/apollo/type.ts:
+    plugins:
+      - "typescript"
